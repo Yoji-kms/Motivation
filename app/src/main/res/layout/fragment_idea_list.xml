@@ -1,32 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/motionLayoutId"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activity.IdeaListFragment">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/ideaListToolbarId"
-        android:visibility="gone"
-        android:elevation="2dp"
-        android:background="@color/transparent"
-        tools:visibility="visible"
-        tools:title="Netoltgy"
-        app:navigationIcon="@drawable/ic_clear_filter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/transparent"
+        android:elevation="2dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_clear_filter"
+        tools:title="Netoltgy"
+        tools:visibility="visible" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/ideaListCoordinatorLayoutId"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/ideaListToolbarId"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ideaListToolbarId">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/ideaListViewId"
@@ -34,15 +35,30 @@
             android:layout_height="match_parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_idea" />
+
+
+        <com.google.android.material.bottomappbar.BottomAppBar
+            android:id="@+id/bottomAppbarId"
+            style="@style/Widget.MaterialComponents.BottomAppBar.Colored"
+            app:backgroundTint="#673AB7"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_gravity="bottom"
+            app:hideOnScroll="true"
+            app:fabAlignmentMode="center"/>
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/createIdeaFabId"
+            android:layout_width="@dimen/fab_size"
+            android:layout_height="@dimen/fab_size"
+            android:layout_margin="16dp"
+            android:contentDescription="@string/description_create_new_idea"
+            android:foreground="@drawable/ic_add_colored"
+            app:layout_anchor="@id/bottomAppbarId"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/createIdeaFabId"
-        android:layout_width="@dimen/fab_size"
-        android:layout_height="@dimen/fab_size"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_margin="16dp"
-        android:foreground="@drawable/ic_add_colored"
-        android:contentDescription="@string/description_create_new_idea" />
 </androidx.constraintlayout.widget.ConstraintLayout>
