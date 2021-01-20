@@ -16,6 +16,7 @@ import androidx.core.net.toFile
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import com.yoji.motivation.R
 import com.yoji.motivation.databinding.DialogAddLinkBinding
 import com.yoji.motivation.databinding.FragmentCreateOrEditBinding
@@ -96,9 +97,14 @@ class CreateOrEditFragment : Fragment() {
                                 if (this.isNotBlank()) {
                                     text =
                                         if (this.startsWith("http://")
-                                            || this.startsWith("https://")) this
+                                            || this.startsWith("https://")
+                                        ) this
                                         else spinner.selectedItem.toString() + this
-                                }
+                                } else Snackbar.make(
+                                    binding.root,
+                                    context.getString(R.string.link_is_empty),
+                                    Snackbar.LENGTH_SHORT
+                                ).show()
                             }
                         }
                         linkGroupId.visibility = View.VISIBLE

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Мотивация</string>
+    <string name="description_idea_image">Изображение для идеи</string>
+    <string name="description_create_new_idea">Создайте новую идею</string>
+    <string name="edit">Изменить</string>
+    <string name="delete">Удалить</string>
+    <string name="add_image">Добавить изображение</string>
+    <string name="add_link">Добавить ссылку</string>
+    <string name="remove_image">Удалить изображение</string>
+    <string name="remove_link">Удалить ссылку</string>
+    <string name="enter_the_link">Введите ссылку</string>
+    <string name="adding_link">"Добавляемая ссылка: "</string>
+    <string name="cancel">Отмена</string>
+    <string name="ok">ОК</string>
+    <string name="save">Сохранить</string>
+    <string name="author_filter">Автор: %s</string>
+    <string name="edit_idea">Измените идею</string>
+    <string name="create_new_idea">Создайте новую идею</string>
+    <string name="enter_the_idea_content">Введите контент идеи</string>
+    <string name="share_idea">Поделиться идеей</string>
+    <string name="link_is_empty">Ссылка пустая</string>
+</resources>
