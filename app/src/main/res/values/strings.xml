@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Motivation</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="description_idea_image">Idea image</string>
+    <string name="description_create_new_idea">Create new idea</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="add_image">Add image</string>
+    <string name="add_link">Add link</string>
+    <string name="remove_image">Remove image</string>
+    <string name="remove_link">Remove link</string>
+    <string name="enter_the_link">Enter the link</string>
+    <string name="adding_link">Adding link:</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="save">Save</string>
+</resources>
