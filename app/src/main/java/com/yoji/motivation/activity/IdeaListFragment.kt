@@ -1,15 +1,18 @@
 package com.yoji.motivation.activity
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
+import androidx.activity.OnBackPressedCallback
 import androidx.core.net.toFile
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.yoji.motivation.R
 import com.yoji.motivation.adapter.IdeaAdapter
+import com.yoji.motivation.application.App
 import com.yoji.motivation.viewmodel.IdeaListViewModel
 import com.yoji.motivation.databinding.FragmentIdeaListBinding
 import com.yoji.motivation.dto.Idea
@@ -22,6 +25,8 @@ class IdeaListFragment : Fragment() {
     private var _binding: FragmentIdeaListBinding? = null
     private val binding get() = _binding!!
     private val ideaListViewModel: IdeaListViewModel by viewModels(ownerProducer = ::requireActivity)
+    private val prefs = App.appContext().getSharedPreferences("prefs", Context.MODE_PRIVATE)
+    private val authorKey = "saved_filter"
 
     private val ideaAdapter by lazy {
         IdeaAdapter(object : OnIdeaClickListener {
@@ -41,27 +46,38 @@ class IdeaListFragment : Fragment() {
                     putExtra(Intent.EXTRA_STREAM, idea.imageUri)
                     addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                     type = "*/*"
-//                    type = "text/plain"
                 }
-                startActivity(Intent.createChooser(intent, "Share idea"))
+                if (intent.resolveActivity(requireActivity().packageManager) != null) {
+                    startActivity(Intent.createChooser(intent, getString(R.string.share_idea)))
+                }
             }
 
             override fun onLink(idea: Idea) {
                 if (idea.link.isNotBlank()) {
                     val intent = Intent().apply {
                         action = Intent.ACTION_VIEW
-                        with(idea.link) {
-                            data = if (!this.startsWith("http://") && !this.startsWith("https://"))
-                                Uri.parse("http://$this")
-                            else Uri.parse(this)
-                        }
+                        data = Uri.parse(idea.link)
                     }
-                    startActivity(intent)
+                    if (intent.resolveActivity(requireActivity().packageManager) != null) {
+                        startActivity(intent)
+                    }
                 }
             }
 
             override fun onAuthor(idea: Idea) {
-                updateDataByAuthor(idea.author)
+                with(ideaListViewModel) {
+                    if (!isFiltered()) {
+                        setAuthor(idea.author)
+                        binding.ideaListToolbarId.apply {
+                            visibility = View.VISIBLE
+                            title = getString(R.string.author_filter, idea.author)
+                        }
+                        with(prefs.edit()) {
+                            putString(authorKey, idea.author)
+                            apply()
+                        }
+                    }
+                }
             }
 
             override fun onDelete(idea: Idea) {
@@ -91,19 +107,43 @@ class IdeaListFragment : Fragment() {
             findNavController().navigate(R.id.action_ideaListFragment_to_createOrEditFragment)
         }
 
-//        ideaListViewModel.createDemoIdeas()
-
         ideaListViewModel.data.observe(viewLifecycleOwner) { ideas ->
             ideaAdapter.submitList(ideas)
+        }
+
+        binding.ideaListToolbarId.apply {
+            setNavigationOnClickListener {
+                with(ideaListViewModel) {
+                    if (isFiltered()) {
+                        clearAuthor()
+                        this@apply.visibility = View.GONE
+                    }
+                }
+            }
+            if (ideaListViewModel.isFiltered()) {
+                title = getString(R.string.author_filter, prefs.getString(authorKey, ""))
+                visibility = View.VISIBLE
+            }
         }
 
         return binding.root
     }
 
-    private fun updateDataByAuthor(author: String) {
-        with(ideaListViewModel) {
-            if (isFiltered()) clearAuthor() else setAuthor(author)
-        }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        requireActivity().onBackPressedDispatcher.addCallback(
+            this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    with(ideaListViewModel) {
+                        if (isFiltered()) {
+                            clearAuthor()
+                            binding.ideaListToolbarId.visibility = View.GONE
+                        }
+                    }
+                }
+            })
     }
 
     override fun onDestroyView() {

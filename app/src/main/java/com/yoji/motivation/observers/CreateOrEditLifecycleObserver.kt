@@ -36,4 +36,8 @@ class CreateOrEditLifecycleObserver(private val registry: ActivityResultRegistry
         this.addBtn = addBtn
         getContent.launch("image/*")
     }
+
+    fun unregister(){
+        getContent.unregister()
+    }
 }

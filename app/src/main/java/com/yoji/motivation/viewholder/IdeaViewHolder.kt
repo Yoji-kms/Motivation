@@ -54,12 +54,12 @@ class IdeaViewHolder(
                     } else View.GONE
                 }
             }
-            linkTxtViewId.apply {
-                with(idea.link) {
-                    text = this
-                    visibility = if (this.isBlank()) View.GONE else View.VISIBLE
-                }
-            }
+//            linkTxtViewId.apply {
+//                with(idea.link) {
+//                    text = this
+//                    visibility = if (this.isBlank()) View.GONE else View.VISIBLE
+//                }
+//            }
             likeBtnId.setOnClickListener { onIdeaClickListener.onLike(idea) }
             dislikeBtnId.setOnClickListener { onIdeaClickListener.onDislike(idea) }
             shareBtnId.setOnClickListener { onIdeaClickListener.onShare(idea) }

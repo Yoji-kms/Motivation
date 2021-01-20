@@ -14,4 +14,13 @@
     <string name="cancel">Cancel</string>
     <string name="ok">OK</string>
     <string name="save">Save</string>
+    <string name="author_filter">Author: %s</string>
+    <string name="edit_idea">Edit idea</string>
+    <string name="create_new_idea">Create new idea</string>
+    <string name="enter_the_idea_content">Enter the idea content</string>
+    <string name="share_idea">Share idea</string>
+    <string-array name="spinner" translatable="false">
+        <item>http://</item>
+        <item>https://</item>
+    </string-array>
 </resources>

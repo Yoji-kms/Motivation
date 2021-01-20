@@ -38,7 +38,7 @@ abstract class IdeaRoomDB: RoomDatabase() {
                         }
                     }
                 )
-//                .allowMainThreadQueries()
+                .allowMainThreadQueries()
                 .build()
     }
 }

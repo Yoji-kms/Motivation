@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.core.net.toFile
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -46,6 +47,7 @@ class CreateOrEditFragment : Fragment() {
 
         binding.apply {
             if (editingIdea?.id != 0L) {
+                createOrEditToolbarId.title = getString(R.string.edit_idea)
                 newContentEdtTxtViewId.setText(editingIdea?.content)
                 if (editingIdea?.imageUri.toString() != "null") {
                     addingImageImgViewId.apply {
@@ -60,6 +62,10 @@ class CreateOrEditFragment : Fragment() {
                     addLinkBtnId.visibility = View.GONE
                 }
                 saveIdeaBtnId.isEnabled = true
+            } else createOrEditToolbarId.title = getString(R.string.create_new_idea)
+
+            createOrEditToolbarId.setNavigationOnClickListener {
+                findNavController().navigate(R.id.action_createOrEditFragment_to_ideaListFragment)
             }
             addImageBtnId.setOnClickListener {
                 observer.selectImage(
@@ -73,9 +79,27 @@ class CreateOrEditFragment : Fragment() {
                 AlertDialog.Builder(requireActivity()).apply {
                     setTitle(getString(R.string.adding_link))
                     setView(dialogBinding.root)
+                    val spinner = dialogBinding.schemaSpinnerId
+                    ArrayAdapter.createFromResource(
+                        context,
+                        R.array.spinner,
+                        android.R.layout.simple_spinner_item
+                    ).also { adapter ->
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                        spinner.adapter = adapter
+                    }
                     setPositiveButton(getString(R.string.ok)) { _, _ ->
                         binding.linkTxtViewId.apply {
-                            text = dialogBinding.addLinkEdtTxtViewId.text
+                            spinner.selectedItem.toString()
+                            with(dialogBinding.addLinkEdtTxtViewId.text.toString())
+                            {
+                                if (this.isNotBlank()) {
+                                    text =
+                                        if (this.startsWith("http://")
+                                            || this.startsWith("https://")) this
+                                        else spinner.selectedItem.toString() + this
+                                }
+                            }
                         }
                         linkGroupId.visibility = View.VISIBLE
                         it.visibility = View.GONE
@@ -117,6 +141,7 @@ class CreateOrEditFragment : Fragment() {
                     newImageUri = if (file != null) Uri.fromFile(file) else Uri.parse("null"),
                     newLink = linkTxtViewId.text.toString()
                 )
+                observer.unregister()
                 ideaViewModel.save()
                 ideaViewModel.clear()
                 findNavController().navigate(R.id.action_createOrEditFragment_to_ideaListFragment)
