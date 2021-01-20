@@ -20,11 +20,9 @@ import com.yoji.motivation.databinding.DialogAddLinkBinding
 import com.yoji.motivation.databinding.FragmentCreateOrEditBinding
 import com.yoji.motivation.observers.CreateOrEditLifecycleObserver
 import com.yoji.motivation.viewmodel.IdeaListViewModel
-import dagger.hilt.android.AndroidEntryPoint
 import java.io.FileOutputStream
 import java.util.*
 
-@AndroidEntryPoint
 class CreateOrEditFragment : Fragment() {
     private var _binding: FragmentCreateOrEditBinding? = null
     private val binding get() = _binding!!

@@ -27,7 +27,7 @@ private val emptyIdea = Idea(
 
 
 class IdeaListViewModel @ViewModelInject internal constructor(
-    private val ideaRepository: IdeaRepository = IdeaRepositoryRoomDbImplementation(
+    private val ideaRepository: IdeaRepositoryRoomDbImplementation = IdeaRepositoryRoomDbImplementation(
         IdeaRoomDB.getInstance(App.appContext()).ideaDAO()
     ),
     @Assisted private val savedStateHandle: SavedStateHandle
@@ -58,9 +58,6 @@ class IdeaListViewModel @ViewModelInject internal constructor(
             }
         }
     }
-
-    fun createDemoIdeas() =
-        if (data.value.isNullOrEmpty()) ideaRepository.createDemoIdeas() else null
 
     fun edit(idea: Idea) {
         editingIdea.value = idea

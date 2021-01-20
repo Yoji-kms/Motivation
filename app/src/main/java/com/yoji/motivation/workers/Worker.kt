@@ -11,6 +11,7 @@ import com.yoji.motivation.application.App
 import com.yoji.motivation.db.IdeaRoomDB
 import com.yoji.motivation.dto.Idea
 import com.yoji.motivation.entity.IdeaEntity
+//import com.yoji.motivation.entity.IdeaEntity
 import java.io.FileOutputStream
 import java.util.*
 

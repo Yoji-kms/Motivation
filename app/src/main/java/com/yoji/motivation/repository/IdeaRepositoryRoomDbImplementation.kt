@@ -10,29 +10,28 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class IdeaRepositoryRoomDbImplementation @Inject constructor(private val dao: IdeaDAO) :
-    IdeaRepository {
-    override fun getAll(): Flow<List<Idea>> = dao.getAll().map {
+class IdeaRepositoryRoomDbImplementation @Inject constructor(private val dao: IdeaDAO) {
+    fun getAll(): Flow<List<Idea>> = dao.getAll().map {
         it.map(IdeaEntity::toIdea)
     }
 
-    override fun getByAuthor(author: String): Flow<List<Idea>> = dao.getByAuthor(author).map {
+    fun getByAuthor(author: String): Flow<List<Idea>> = dao.getByAuthor(author).map {
         it.map(IdeaEntity::toIdea)
     }
 
-    override fun likeById(id: Long) {
+    fun likeById(id: Long) {
         dao.likeById(id)
     }
 
-    override fun dislikeById(id: Long) {
+    fun dislikeById(id: Long) {
         dao.dislikeById(id)
     }
 
-    override fun removeById(id: Long) {
+    fun removeById(id: Long) {
         dao.removeById(id)
     }
 
-    override fun save(idea: Idea) {
+    fun save(idea: Idea) {
         dao.save(IdeaEntity.fromIdea(idea))
     }
 }
