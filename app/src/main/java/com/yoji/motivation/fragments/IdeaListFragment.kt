@@ -1,4 +1,4 @@
-package com.yoji.motivation.activity
+package com.yoji.motivation.fragments
 
 import android.content.Context
 import android.content.Intent
@@ -31,26 +31,11 @@ class IdeaListFragment : Fragment() {
     private val ideaAdapter by lazy {
         IdeaAdapter(object : OnIdeaClickListener {
 
-            override fun onLike(idea: Idea) {
-                ideaListViewModel.likeById(idea.id)
-            }
+            override fun onLike(idea: Idea) = ideaListViewModel.likeById(idea.id)
 
-            override fun onDislike(idea: Idea) {
-                ideaListViewModel.dislikeById(idea.id)
-            }
+            override fun onDislike(idea: Idea) = ideaListViewModel.dislikeById(idea.id)
 
-            override fun onShare(idea: Idea) {
-                val intent = Intent().apply {
-                    action = Intent.ACTION_SEND
-                    putExtra(Intent.EXTRA_TEXT, idea.author + "\n" + idea.content)
-                    putExtra(Intent.EXTRA_STREAM, idea.imageUri)
-                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                    type = "*/*"
-                }
-                if (intent.resolveActivity(requireActivity().packageManager) != null) {
-                    startActivity(Intent.createChooser(intent, getString(R.string.share_idea)))
-                }
-            }
+            override fun onShare(idea: Idea) = ideaListViewModel.share(idea, requireContext())
 
             override fun onLink(idea: Idea) {
                 if (idea.link.isNotBlank()) {

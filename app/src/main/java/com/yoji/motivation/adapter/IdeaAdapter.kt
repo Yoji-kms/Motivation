@@ -29,4 +29,5 @@ class IdeaAdapter(
         val idea = getItem(position)
         holder.bind(idea)
     }
+
 }

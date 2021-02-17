@@ -1,4 +1,4 @@
-package com.yoji.motivation.activity
+package com.yoji.motivation.fragments
 
 import android.app.AlertDialog
 import android.graphics.Bitmap

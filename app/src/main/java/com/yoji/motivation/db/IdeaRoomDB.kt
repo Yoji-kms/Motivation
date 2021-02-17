@@ -15,11 +15,12 @@ import com.yoji.motivation.workers.Worker
 
 @Database(entities = [IdeaEntity::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
-abstract class IdeaRoomDB: RoomDatabase() {
+abstract class IdeaRoomDB : RoomDatabase() {
     abstract fun ideaDAO(): IdeaDAO
 
-    companion object{
-        @Volatile private var instance: IdeaRoomDB? = null
+    companion object {
+        @Volatile
+        private var instance: IdeaRoomDB? = null
 
         fun getInstance(context: Context): IdeaRoomDB {
             return instance ?: synchronized(this) {

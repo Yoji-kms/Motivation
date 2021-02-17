@@ -54,12 +54,6 @@ class IdeaViewHolder(
                     } else View.GONE
                 }
             }
-//            linkTxtViewId.apply {
-//                with(idea.link) {
-//                    text = this
-//                    visibility = if (this.isBlank()) View.GONE else View.VISIBLE
-//                }
-//            }
             likeBtnId.setOnClickListener { onIdeaClickListener.onLike(idea) }
             dislikeBtnId.setOnClickListener { onIdeaClickListener.onDislike(idea) }
             shareBtnId.setOnClickListener { onIdeaClickListener.onShare(idea) }
@@ -86,7 +80,6 @@ class IdeaViewHolder(
     }
 
     private fun Int.roundToThousandsWithOneDecimal(): Double = (this / 100).toDouble() / 10
-
 
     @SuppressLint("SimpleDateFormat")
     private fun Date.toFormattedString() = SimpleDateFormat("dd MMM yyyy")

@@ -1,13 +1,16 @@
 package com.yoji.motivation.viewmodel
 
+import android.content.Context
+import android.content.Intent
 import android.net.Uri
+import androidx.core.content.ContextCompat.startActivity
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
+import com.yoji.motivation.R
 import com.yoji.motivation.application.App
 import com.yoji.motivation.db.IdeaRoomDB
 import com.yoji.motivation.dto.Idea
-import com.yoji.motivation.repository.IdeaRepository
 import com.yoji.motivation.repository.IdeaRepositoryRoomDbImplementation
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
@@ -50,6 +53,25 @@ class IdeaListViewModel @ViewModelInject internal constructor(
     fun likeById(id: Long) = ideaRepository.likeById(id)
     fun dislikeById(id: Long) = ideaRepository.dislikeById(id)
     fun removeById(id: Long) = ideaRepository.removeById(id)
+    fun share(idea: Idea, context: Context) {
+        val intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, idea.author + "\n" + idea.content)
+            putExtra(Intent.EXTRA_STREAM, idea.imageUri)
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            type = "*/*"
+        }
+        if (intent.resolveActivity(context.packageManager) != null) {
+            startActivity(
+                context,
+                Intent.createChooser(
+                    intent,
+                    context.getString(R.string.share_idea)
+                ),
+                null
+            )
+        }
+    }
 
     init {
         viewModelScope.launch {
@@ -88,11 +110,11 @@ class IdeaListViewModel @ViewModelInject internal constructor(
         )
     }
 
-    fun setAuthor (author_name: String){
+    fun setAuthor(author_name: String) {
         author.value = author_name
     }
 
-    fun clearAuthor(){
+    fun clearAuthor() {
         author.value = NO_AUTHOR
     }
 

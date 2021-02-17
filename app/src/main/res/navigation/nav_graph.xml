@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/ideaListFragment"
-        android:name="com.yoji.motivation.activity.IdeaListFragment"
+        android:name="com.yoji.motivation.fragments.IdeaListFragment"
         android:label="fragment_idea_list"
         tools:layout="@layout/fragment_idea_list" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/createOrEditFragment"
-        android:name="com.yoji.motivation.activity.CreateOrEditFragment"
+        android:name="com.yoji.motivation.fragments.CreateOrEditFragment"
         android:label="fragment_create_or_edit"
         tools:layout="@layout/fragment_create_or_edit" >
         <action
