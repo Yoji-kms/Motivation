@@ -61,6 +61,14 @@ class IdeaViewHolder(
         }
     }
 
+    fun bindPlaceholder(){
+        binding.apply {
+            authorTxtViewId.text = "..."
+            contentTxtViewId.text = "..."
+            dateTxtViewId.text = "..."
+        }
+    }
+
     private fun Int.toFormattedString() = when (this) {
         in 0..999 -> this.toString()
         in 1_000..9_999 -> this.roundToThousandsWithOneDecimal().toString() + "K"

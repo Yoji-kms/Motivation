@@ -29,7 +29,6 @@ class Worker(
         return Result.success()
     }
 
-
     //Demo ideas
     private val demoIdeas = listOf(
         Idea(
@@ -58,6 +57,105 @@ class Worker(
             likesCounter = 0,
             imageUri = resToUri(R.drawable.blade_runner_2049),
             link = "https://youtu.be/S34y1-CNBhE"
+        ),
+        Idea(
+            id = 0L,
+            content = "4",
+            author = "...and Action!",
+            published = Calendar.getInstance().apply { set(2020, 0, 20) }.time,
+            likesCounter = 0,
+            imageUri = Uri.parse("null"),
+            link = ""
+        ),
+        Idea(
+            id = 0L,
+            content = "5",
+            author = "...and Action!",
+            published = Calendar.getInstance().apply { set(2020, 2, 20) }.time,
+            likesCounter = 0,
+            imageUri = Uri.parse("null"),
+            link = ""
+        ),
+        Idea(
+            id = 0L,
+            content = "6",
+            author = "...and Action!",
+            published = Calendar.getInstance().apply { set(2020, 3, 20) }.time,
+            likesCounter = 0,
+            imageUri = Uri.parse("null"),
+            link = ""
+        ),
+        Idea(
+            id = 0L,
+            content = "7",
+            author = "...and Action!",
+            published = Calendar.getInstance().apply { set(2020, 4, 20) }.time,
+            likesCounter = 0,
+            imageUri = Uri.parse("null"),
+            link = ""
+        ),
+        Idea(
+            id = 0L,
+            content = "8",
+            author = "...and Action!",
+            published = Calendar.getInstance().apply { set(2020, 5, 20) }.time,
+            likesCounter = 0,
+            imageUri = Uri.parse("null"),
+            link = ""
+        ),
+        Idea(
+            id = 0L,
+            content = "9",
+            author = "...and Action!",
+            published = Calendar.getInstance().apply { set(2020, 6, 20) }.time,
+            likesCounter = 0,
+            imageUri = Uri.parse("null"),
+            link = ""
+        ),
+        Idea(
+            id = 0L,
+            content = "10",
+            author = "...and Action!",
+            published = Calendar.getInstance().apply { set(2020, 7, 20) }.time,
+            likesCounter = 0,
+            imageUri = Uri.parse("null"),
+            link = ""
+        ),
+        Idea(
+            id = 0L,
+            content = "11",
+            author = "...and Action!",
+            published = Calendar.getInstance().apply { set(2020, 8, 20) }.time,
+            likesCounter = 0,
+            imageUri = Uri.parse("null"),
+            link = ""
+        ),
+        Idea(
+            id = 0L,
+            content = "12",
+            author = "...and Action!",
+            published = Calendar.getInstance().apply { set(2020, 9, 20) }.time,
+            likesCounter = 0,
+            imageUri = Uri.parse("null"),
+            link = ""
+        ),
+        Idea(
+            id = 0L,
+            content = "13",
+            author = "...and Action!",
+            published = Calendar.getInstance().apply { set(2020, 10, 20) }.time,
+            likesCounter = 0,
+            imageUri = Uri.parse("null"),
+            link = ""
+        ),
+        Idea(
+            id = 0L,
+            content = "14",
+            author = "...and Action!",
+            published = Calendar.getInstance().apply { set(2020, 11, 20) }.time,
+            likesCounter = 0,
+            imageUri = Uri.parse("null"),
+            link = ""
         )
     )
 

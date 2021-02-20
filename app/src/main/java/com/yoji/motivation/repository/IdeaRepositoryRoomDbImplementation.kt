@@ -1,5 +1,6 @@
 package com.yoji.motivation.repository
 
+import androidx.paging.*
 import com.yoji.motivation.dao.IdeaDAO
 import com.yoji.motivation.dto.Idea
 import com.yoji.motivation.entity.IdeaEntity
@@ -11,13 +12,19 @@ import javax.inject.Singleton
 
 @Singleton
 class IdeaRepositoryRoomDbImplementation @Inject constructor(private val dao: IdeaDAO) {
-    fun getAll(): Flow<List<Idea>> = dao.getAll().map {
+    private val config = PagingConfig(
+        pageSize = 5,
+        enablePlaceholders = true
+    )
+
+    fun getAll(): Flow<PagingData<Idea>> = Pager(config = config) { dao.getAll() }.flow.map {
         it.map(IdeaEntity::toIdea)
     }
 
-    fun getByAuthor(author: String): Flow<List<Idea>> = dao.getByAuthor(author).map {
-        it.map(IdeaEntity::toIdea)
-    }
+    fun getByAuthor(author: String): Flow<PagingData<Idea>> =
+        Pager(config = config) { dao.getByAuthor(author) }.flow.map{
+            it.map(IdeaEntity::toIdea)
+        }
 
     fun likeById(id: Long) {
         dao.likeById(id)

@@ -1,9 +1,10 @@
 package com.yoji.motivation.adapter
 
-
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.ListAdapter
+import android.widget.Toast
+import androidx.paging.PagingDataAdapter
+import com.yoji.motivation.application.App
 import com.yoji.motivation.callback.IdeaDiffCallback
 import com.yoji.motivation.databinding.ItemIdeaBinding
 import com.yoji.motivation.dto.Idea
@@ -12,7 +13,8 @@ import com.yoji.motivation.viewholder.IdeaViewHolder
 
 class IdeaAdapter(
     private val onIdeaClickListener: OnIdeaClickListener
-) : ListAdapter<Idea, IdeaViewHolder>(IdeaDiffCallback()) {
+) : PagingDataAdapter<Idea, IdeaViewHolder>(IdeaDiffCallback()) {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IdeaViewHolder {
         val binding = ItemIdeaBinding.inflate(
             LayoutInflater.from(parent.context),
@@ -27,7 +29,10 @@ class IdeaAdapter(
 
     override fun onBindViewHolder(holder: IdeaViewHolder, position: Int) {
         val idea = getItem(position)
-        holder.bind(idea)
+        if (idea == null) {
+            holder.bindPlaceholder()
+            Toast.makeText(App.appContext(), "Placeholder", Toast.LENGTH_LONG).show()
+        }
+        else holder.bind(idea)
     }
-
 }

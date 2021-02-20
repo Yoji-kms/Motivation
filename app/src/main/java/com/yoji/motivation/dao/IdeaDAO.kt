@@ -4,16 +4,17 @@ import android.net.Uri
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.paging.PagingSource
 import com.yoji.motivation.entity.IdeaEntity
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface IdeaDAO {
     @Query("SELECT * FROM ideas ORDER BY likesCounter DESC")
-    fun getAll(): Flow<List<IdeaEntity>>
+    fun getAll(): PagingSource<Int, IdeaEntity>
 
     @Query("SELECT * FROM ideas WHERE author = :author ORDER BY likesCounter DESC")
-    fun getByAuthor(author: String): Flow<List<IdeaEntity>>
+    fun getByAuthor(author: String): PagingSource<Int, IdeaEntity>
+
 
     @Query("UPDATE ideas SET likesCounter = likesCounter + 1 WHERE id = :id")
     fun likeById(id: Long)

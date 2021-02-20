@@ -9,6 +9,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.net.toFile
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.yoji.motivation.R
 import com.yoji.motivation.adapter.IdeaAdapter
@@ -18,13 +19,15 @@ import com.yoji.motivation.databinding.FragmentIdeaListBinding
 import com.yoji.motivation.dto.Idea
 import com.yoji.motivation.listeners.OnIdeaClickListener
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class IdeaListFragment : Fragment() {
 
     private var _binding: FragmentIdeaListBinding? = null
     private val binding get() = _binding!!
-    private val ideaListViewModel: IdeaListViewModel by viewModels(ownerProducer = ::requireActivity)
+    private val ideaListViewModel by viewModels<IdeaListViewModel>(ownerProducer = ::requireActivity)
     private val prefs = App.appContext().getSharedPreferences("prefs", Context.MODE_PRIVATE)
     private val authorKey = "saved_filter"
 
@@ -92,9 +95,13 @@ class IdeaListFragment : Fragment() {
             findNavController().navigate(R.id.action_ideaListFragment_to_createOrEditFragment)
         }
 
-        ideaListViewModel.data.observe(viewLifecycleOwner) { ideas ->
-            ideaAdapter.submitList(ideas)
+        ideaListViewModel.data.observe(viewLifecycleOwner){
+            ideaAdapter.submitData(lifecycle, it)
         }
+
+//        ideaListViewModel.data.observe(viewLifecycleOwner) { ideas ->
+//            ideaAdapter.submitData(ideas)
+//        }
 
         binding.ideaListToolbarId.apply {
             setNavigationOnClickListener {

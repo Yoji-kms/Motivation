@@ -4,19 +4,21 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.core.content.ContextCompat.startActivity
-import androidx.hilt.Assisted
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.yoji.motivation.R
 import com.yoji.motivation.application.App
 import com.yoji.motivation.db.IdeaRoomDB
 import com.yoji.motivation.dto.Idea
 import com.yoji.motivation.repository.IdeaRepositoryRoomDbImplementation
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
 import java.util.*
+import javax.inject.Inject
 
 private val emptyIdea = Idea(
     id = 0L,
@@ -28,25 +30,25 @@ private val emptyIdea = Idea(
     link = ""
 )
 
-
-class IdeaListViewModel @ViewModelInject internal constructor(
+@HiltViewModel
+class IdeaListViewModel @Inject constructor(
+    private val savedStateHandle: SavedStateHandle,
     private val ideaRepository: IdeaRepositoryRoomDbImplementation = IdeaRepositoryRoomDbImplementation(
         IdeaRoomDB.getInstance(App.appContext()).ideaDAO()
     ),
-    @Assisted private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val author: MutableStateFlow<String> = MutableStateFlow(
         savedStateHandle.get(AUTHOR_SAVED_STATE_KEY) ?: NO_AUTHOR
     )
 
-    val data: LiveData<List<Idea>> = author.flatMapLatest { author_name ->
+    val data: LiveData<PagingData<Idea>> = author.flatMapLatest { author_name ->
         if (author_name == NO_AUTHOR) {
             ideaRepository.getAll()
         } else {
             ideaRepository.getByAuthor(author_name)
         }
-    }.asLiveData()
+    }.asLiveData().cachedIn(viewModelScope)
 
     val editingIdea = MutableLiveData(emptyIdea)
 
