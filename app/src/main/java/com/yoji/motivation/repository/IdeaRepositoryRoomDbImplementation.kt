@@ -22,7 +22,7 @@ class IdeaRepositoryRoomDbImplementation @Inject constructor(private val dao: Id
     }
 
     fun getByAuthor(author: String): Flow<PagingData<Idea>> =
-        Pager(config = config) { dao.getByAuthor(author) }.flow.map{
+        Pager(config = config) { dao.getByAuthor(author) }.flow.map {
             it.map(IdeaEntity::toIdea)
         }
 

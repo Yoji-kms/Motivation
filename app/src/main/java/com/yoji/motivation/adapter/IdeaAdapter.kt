@@ -29,10 +29,7 @@ class IdeaAdapter(
 
     override fun onBindViewHolder(holder: IdeaViewHolder, position: Int) {
         val idea = getItem(position)
-        if (idea == null) {
-            holder.bindPlaceholder()
-            Toast.makeText(App.appContext(), "Placeholder", Toast.LENGTH_LONG).show()
-        }
+        if (idea == null) holder.bindPlaceholder()
         else holder.bind(idea)
     }
 }

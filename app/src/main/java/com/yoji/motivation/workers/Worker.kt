@@ -11,6 +11,7 @@ import com.yoji.motivation.application.App
 import com.yoji.motivation.db.IdeaRoomDB
 import com.yoji.motivation.dto.Idea
 import com.yoji.motivation.entity.IdeaEntity
+import com.yoji.motivation.fragments.CreateOrEditFragment
 //import com.yoji.motivation.entity.IdeaEntity
 import java.io.FileOutputStream
 import java.util.*
@@ -160,7 +161,13 @@ class Worker(
     )
 
     private fun resToUri(resId: Int): Uri {
-        App.appContext().filesDir.resolve("$resId.jpeg").also { file ->
+        App.appContext().filesDir
+            .resolve(CreateOrEditFragment.IMAGE_DIR)
+            .also {
+                if (!it.exists()) it.mkdir()
+            }
+            .resolve("$resId.jpeg")
+            .also { file ->
             FileOutputStream(file).use {
                 BitmapFactory.decodeResource(App.appContext().resources, resId).compress(
                     Bitmap.CompressFormat.JPEG,

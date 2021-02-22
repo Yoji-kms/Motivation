@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.core.content.ContextCompat.startActivity
+import androidx.core.content.FileProvider.getUriForFile
 import androidx.lifecycle.*
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
@@ -17,6 +18,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
+import java.io.File
 import java.util.*
 import javax.inject.Inject
 
@@ -57,9 +59,19 @@ class IdeaListViewModel @Inject constructor(
     fun removeById(id: Long) = ideaRepository.removeById(id)
     fun share(idea: Idea, context: Context) {
         val intent = Intent().apply {
+            val shareImageUri = with(idea.imageUri.path) {
+                if (this == null) return@with null
+                else {
+                    getUriForFile(
+                        context,
+                        "com.yoji.motivation.fileprovider",
+                        File(this)
+                    )
+                }
+            }
             action = Intent.ACTION_SEND
             putExtra(Intent.EXTRA_TEXT, idea.author + "\n" + idea.content)
-            putExtra(Intent.EXTRA_STREAM, idea.imageUri)
+            if (shareImageUri != null) putExtra(Intent.EXTRA_STREAM, shareImageUri)
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             type = "*/*"
         }
@@ -72,6 +84,18 @@ class IdeaListViewModel @Inject constructor(
                 ),
                 null
             )
+        }
+    }
+
+    fun link(idea: Idea, context: Context) {
+        if (idea.link.isNotBlank()) {
+            val intent = Intent().apply {
+                action = Intent.ACTION_VIEW
+                data = Uri.parse(idea.link)
+            }
+            if (intent.resolveActivity(context.packageManager) != null) {
+                startActivity(context, intent, null)
+            }
         }
     }
 

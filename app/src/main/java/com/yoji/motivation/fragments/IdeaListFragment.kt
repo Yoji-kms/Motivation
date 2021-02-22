@@ -1,15 +1,12 @@
 package com.yoji.motivation.fragments
 
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import androidx.activity.OnBackPressedCallback
 import androidx.core.net.toFile
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.yoji.motivation.R
 import com.yoji.motivation.adapter.IdeaAdapter
@@ -19,8 +16,6 @@ import com.yoji.motivation.databinding.FragmentIdeaListBinding
 import com.yoji.motivation.dto.Idea
 import com.yoji.motivation.listeners.OnIdeaClickListener
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class IdeaListFragment : Fragment() {
@@ -40,17 +35,7 @@ class IdeaListFragment : Fragment() {
 
             override fun onShare(idea: Idea) = ideaListViewModel.share(idea, requireContext())
 
-            override fun onLink(idea: Idea) {
-                if (idea.link.isNotBlank()) {
-                    val intent = Intent().apply {
-                        action = Intent.ACTION_VIEW
-                        data = Uri.parse(idea.link)
-                    }
-                    if (intent.resolveActivity(requireActivity().packageManager) != null) {
-                        startActivity(intent)
-                    }
-                }
-            }
+            override fun onLink(idea: Idea) = ideaListViewModel.link(idea, requireContext())
 
             override fun onAuthor(idea: Idea) {
                 with(ideaListViewModel) {

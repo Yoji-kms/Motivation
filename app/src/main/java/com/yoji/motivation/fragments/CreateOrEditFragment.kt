@@ -26,6 +26,10 @@ import java.io.FileOutputStream
 import java.util.*
 
 class CreateOrEditFragment : Fragment() {
+    companion object{
+        const val IMAGE_DIR = "images"
+    }
+
     private var _binding: FragmentCreateOrEditBinding? = null
     private val binding get() = _binding!!
     private lateinit var observer: CreateOrEditLifecycleObserver
@@ -132,6 +136,10 @@ class CreateOrEditFragment : Fragment() {
                 }
                 val file = if (addingImageImgViewId.isVisible)
                     requireContext().filesDir
+                        .resolve(IMAGE_DIR)
+                        .also {
+                            if (!it.exists()) it.mkdir()
+                        }
                         .resolve(Calendar.getInstance().timeInMillis.toString() + ".jpeg")
                         .also { file ->
                             FileOutputStream(file).use {
