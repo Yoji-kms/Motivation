@@ -26,9 +26,6 @@ import java.io.FileOutputStream
 import java.util.*
 
 class CreateOrEditFragment : Fragment() {
-    companion object{
-        const val IMAGE_DIR = "images"
-    }
 
     private var _binding: FragmentCreateOrEditBinding? = null
     private val binding get() = _binding!!
@@ -129,30 +126,10 @@ class CreateOrEditFragment : Fragment() {
                 addImageBtnId.visibility = View.VISIBLE
             }
             saveIdeaBtnId.setOnClickListener {
-                with(ideaViewModel.editingIdea.value?.imageUri) {
-                    if (this.toString() != "null"
-                        && this != null
-                    ) toFile().delete()
-                }
-                val file = if (addingImageImgViewId.isVisible)
-                    requireContext().filesDir
-                        .resolve(IMAGE_DIR)
-                        .also {
-                            if (!it.exists()) it.mkdir()
-                        }
-                        .resolve(Calendar.getInstance().timeInMillis.toString() + ".jpeg")
-                        .also { file ->
-                            FileOutputStream(file).use {
-                                viewToBitmap(addingImageImgViewId).compress(
-                                    Bitmap.CompressFormat.JPEG,
-                                    50,
-                                    it
-                                )
-                            }
-                        } else null
                 ideaViewModel.changeContent(
                     newContent = newContentEdtTxtViewId.text.toString(),
-                    newImageUri = if (file != null) Uri.fromFile(file) else Uri.parse("null"),
+                    newImageImgView = addingImageImgViewId,
+                    context = requireContext(),
                     newLink = linkTxtViewId.text.toString()
                 )
                 observer.unregister()
@@ -177,12 +154,6 @@ class CreateOrEditFragment : Fragment() {
         }
 
         return binding.root
-    }
-
-    private fun viewToBitmap(view: View): Bitmap {
-        val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
-        view.draw(Canvas(bitmap))
-        return bitmap
     }
 
     override fun onDestroyView() {
