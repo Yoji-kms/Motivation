@@ -84,10 +84,6 @@ class IdeaListFragment : Fragment() {
             ideaAdapter.submitData(lifecycle, it)
         }
 
-//        ideaListViewModel.data.observe(viewLifecycleOwner) { ideas ->
-//            ideaAdapter.submitData(ideas)
-//        }
-
         binding.ideaListToolbarId.apply {
             setNavigationOnClickListener {
                 with(ideaListViewModel) {

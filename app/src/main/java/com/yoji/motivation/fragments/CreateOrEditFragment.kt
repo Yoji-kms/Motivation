@@ -1,9 +1,6 @@
 package com.yoji.motivation.fragments
 
 import android.app.AlertDialog
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -12,8 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import androidx.core.net.toFile
-import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
@@ -22,8 +17,6 @@ import com.yoji.motivation.databinding.DialogAddLinkBinding
 import com.yoji.motivation.databinding.FragmentCreateOrEditBinding
 import com.yoji.motivation.observers.CreateOrEditLifecycleObserver
 import com.yoji.motivation.viewmodel.IdeaListViewModel
-import java.io.FileOutputStream
-import java.util.*
 
 class CreateOrEditFragment : Fragment() {
 

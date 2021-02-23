@@ -152,11 +152,102 @@ class Worker(
             id = 0L,
             content = "14",
             author = "...and Action!",
-            published = Calendar.getInstance().apply { set(2020, 11, 20) }.time,
+            published = Calendar.getInstance().apply { set(2020, 10, 20) }.time,
             likesCounter = 0,
             imageUri = Uri.parse("null"),
             link = ""
-        )
+        ),
+        Idea(
+            id = 0L,
+            content = "15",
+            author = "...and Action!",
+            published = Calendar.getInstance().apply { set(2020, 10, 20) }.time,
+            likesCounter = 0,
+            imageUri = Uri.parse("null"),
+            link = ""
+        ),
+        Idea(
+            id = 0L,
+            content = "16",
+            author = "...and Action!",
+            published = Calendar.getInstance().apply { set(2020, 10, 20) }.time,
+            likesCounter = 0,
+            imageUri = Uri.parse("null"),
+            link = ""
+        ),
+        Idea(
+            id = 0L,
+            content = "17",
+            author = "...and Action!",
+            published = Calendar.getInstance().apply { set(2020, 10, 20) }.time,
+            likesCounter = 0,
+            imageUri = Uri.parse("null"),
+            link = ""
+        ),
+        Idea(
+            id = 0L,
+            content = "18",
+            author = "...and Action!",
+            published = Calendar.getInstance().apply { set(2020, 10, 20) }.time,
+            likesCounter = 0,
+            imageUri = Uri.parse("null"),
+            link = ""
+        ),
+        Idea(
+            id = 0L,
+            content = "19",
+            author = "...and Action!",
+            published = Calendar.getInstance().apply { set(2020, 10, 20) }.time,
+            likesCounter = 0,
+            imageUri = Uri.parse("null"),
+            link = ""
+        ),
+        Idea(
+            id = 0L,
+            content = "20",
+            author = "...and Action!",
+            published = Calendar.getInstance().apply { set(2020, 10, 20) }.time,
+            likesCounter = 0,
+            imageUri = Uri.parse("null"),
+            link = ""
+        ),
+        Idea(
+            id = 0L,
+            content = "21",
+            author = "...and Action!",
+            published = Calendar.getInstance().apply { set(2020, 10, 20) }.time,
+            likesCounter = 0,
+            imageUri = Uri.parse("null"),
+            link = ""
+        ),
+        Idea(
+            id = 0L,
+            content = "22",
+            author = "...and Action!",
+            published = Calendar.getInstance().apply { set(2020, 10, 20) }.time,
+            likesCounter = 0,
+            imageUri = Uri.parse("null"),
+            link = ""
+        ),
+        Idea(
+            id = 0L,
+            content = "23",
+            author = "...and Action!",
+            published = Calendar.getInstance().apply { set(2020, 10, 20) }.time,
+            likesCounter = 0,
+            imageUri = Uri.parse("null"),
+            link = ""
+        ),
+        Idea(
+            id = 0L,
+            content = "24",
+            author = "...and Action!",
+            published = Calendar.getInstance().apply { set(2020, 10, 20) }.time,
+            likesCounter = 0,
+            imageUri = Uri.parse("null"),
+            link = ""
+        ),
+
     )
 
     private fun resToUri(resId: Int): Uri {

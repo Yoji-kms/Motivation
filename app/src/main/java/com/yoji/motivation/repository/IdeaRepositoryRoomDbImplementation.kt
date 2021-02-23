@@ -11,34 +11,61 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class IdeaRepositoryRoomDbImplementation @Inject constructor(private val dao: IdeaDAO) {
+class IdeaRepositoryRoomDbImplementation @Inject constructor(private val dao: IdeaDAO) : IdeaRepository {
     private val config = PagingConfig(
-        pageSize = 5,
-        enablePlaceholders = true
+        pageSize = 7,
+        prefetchDistance = 3,
+        enablePlaceholders = true,
+        maxSize = 13
     )
 
-    fun getAll(): Flow<PagingData<Idea>> = Pager(config = config) { dao.getAll() }.flow.map {
+    override fun getAll(): Flow<PagingData<Idea>> = Pager(config = config) { dao.getAll() }.flow.map {
         it.map(IdeaEntity::toIdea)
     }
 
-    fun getByAuthor(author: String): Flow<PagingData<Idea>> =
+    override fun getByAuthor(author: String): Flow<PagingData<Idea>> =
         Pager(config = config) { dao.getByAuthor(author) }.flow.map {
             it.map(IdeaEntity::toIdea)
         }
 
-    fun likeById(id: Long) {
+    override fun likeById(id: Long) {
         dao.likeById(id)
     }
 
-    fun dislikeById(id: Long) {
+    override fun dislikeById(id: Long) {
         dao.dislikeById(id)
     }
 
-    fun removeById(id: Long) {
+    override fun removeById(id: Long) {
         dao.removeById(id)
     }
 
-    fun save(idea: Idea) {
+    override fun save(idea: Idea) {
         dao.save(IdeaEntity.fromIdea(idea))
     }
+
+//    fun getAll(): Flow<PagingData<Idea>> = Pager(config = config) { dao.getAll() }.flow.map {
+//        it.map(IdeaEntity::toIdea)
+//    }
+//
+//    fun getByAuthor(author: String): Flow<PagingData<Idea>> =
+//        Pager(config = config) { dao.getByAuthor(author) }.flow.map {
+//            it.map(IdeaEntity::toIdea)
+//        }
+//
+//    fun likeById(id: Long) {
+//        dao.likeById(id)
+//    }
+//
+//    fun dislikeById(id: Long) {
+//        dao.dislikeById(id)
+//    }
+//
+//    fun removeById(id: Long) {
+//        dao.removeById(id)
+//    }
+//
+//    fun save(idea: Idea) {
+//        dao.save(IdeaEntity.fromIdea(idea))
+//    }
 }

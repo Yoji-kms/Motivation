@@ -29,7 +29,8 @@ class IdeaAdapter(
 
     override fun onBindViewHolder(holder: IdeaViewHolder, position: Int) {
         val idea = getItem(position)
-        if (idea == null) holder.bindPlaceholder()
+        if (idea == null)
+            holder.bindPlaceholder()
         else holder.bind(idea)
     }
 }
