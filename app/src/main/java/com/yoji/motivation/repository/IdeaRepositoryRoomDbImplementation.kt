@@ -43,29 +43,4 @@ class IdeaRepositoryRoomDbImplementation @Inject constructor(private val dao: Id
     override fun save(idea: Idea) {
         dao.save(IdeaEntity.fromIdea(idea))
     }
-
-//    fun getAll(): Flow<PagingData<Idea>> = Pager(config = config) { dao.getAll() }.flow.map {
-//        it.map(IdeaEntity::toIdea)
-//    }
-//
-//    fun getByAuthor(author: String): Flow<PagingData<Idea>> =
-//        Pager(config = config) { dao.getByAuthor(author) }.flow.map {
-//            it.map(IdeaEntity::toIdea)
-//        }
-//
-//    fun likeById(id: Long) {
-//        dao.likeById(id)
-//    }
-//
-//    fun dislikeById(id: Long) {
-//        dao.dislikeById(id)
-//    }
-//
-//    fun removeById(id: Long) {
-//        dao.removeById(id)
-//    }
-//
-//    fun save(idea: Idea) {
-//        dao.save(IdeaEntity.fromIdea(idea))
-//    }
 }
