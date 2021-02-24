@@ -3,6 +3,8 @@ package com.yoji.motivation.di
 import android.content.Context
 import com.yoji.motivation.dao.IdeaDAO
 import com.yoji.motivation.db.IdeaRoomDB
+import com.yoji.motivation.repository.IdeaRepository
+import com.yoji.motivation.repository.IdeaRepositoryRoomDbImplementation
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,5 +25,10 @@ class Module {
     @Provides
     fun provideIdeaDAO(ideaRoomDB: IdeaRoomDB): IdeaDAO {
         return ideaRoomDB.ideaDAO()
+    }
+
+    @Provides
+    fun provideIdeaRepository(dao: IdeaDAO) : IdeaRepository{
+        return IdeaRepositoryRoomDbImplementation(dao)
     }
 }

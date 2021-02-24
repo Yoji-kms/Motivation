@@ -18,6 +18,7 @@ import com.yoji.motivation.R
 import com.yoji.motivation.application.App
 import com.yoji.motivation.db.IdeaRoomDB
 import com.yoji.motivation.dto.Idea
+import com.yoji.motivation.repository.IdeaRepository
 import com.yoji.motivation.repository.IdeaRepositoryRoomDbImplementation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -42,7 +43,7 @@ private val emptyIdea = Idea(
 @HiltViewModel
 class IdeaListViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val ideaRepository: IdeaRepositoryRoomDbImplementation = IdeaRepositoryRoomDbImplementation(
+    private val ideaRepository: IdeaRepository = IdeaRepositoryRoomDbImplementation(
         IdeaRoomDB.getInstance(App.appContext()).ideaDAO()
     ),
 ) : ViewModel() {
