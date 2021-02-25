@@ -45,7 +45,7 @@ class IdeaListViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val ideaRepository: IdeaRepository = IdeaRepositoryRoomDbImplementation(
         IdeaRoomDB.getInstance(App.appContext()).ideaDAO()
-    ),
+    )
 ) : ViewModel() {
 
     private val author: MutableStateFlow<String> = MutableStateFlow(
