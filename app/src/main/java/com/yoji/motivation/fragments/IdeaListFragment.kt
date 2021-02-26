@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.activity.OnBackPressedCallback
 import androidx.core.net.toFile
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -59,8 +60,8 @@ class IdeaListFragment : Fragment() {
             }
 
             override fun onEdit(idea: Idea) {
-                ideaListViewModel.edit(idea)
-                findNavController().navigate(R.id.action_ideaListFragment_to_createOrEditFragment)
+                val bundle = bundleOf("editingIdeaId" to idea.id)
+                findNavController().navigate(R.id.action_ideaListFragment_to_createOrEditFragment, bundle)
             }
         })
     }
@@ -76,7 +77,7 @@ class IdeaListFragment : Fragment() {
         binding.ideaListViewId.adapter = ideaAdapter
 
         binding.createIdeaFabId.setOnClickListener {
-            ideaListViewModel.clear()
+//            ideaListViewModel.clear()
             findNavController().navigate(R.id.action_ideaListFragment_to_createOrEditFragment)
         }
 

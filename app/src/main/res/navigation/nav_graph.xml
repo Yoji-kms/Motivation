@@ -22,5 +22,9 @@
         <action
             android:id="@+id/action_createOrEditFragment_to_ideaListFragment"
             app:destination="@id/ideaListFragment" />
+        <argument
+            android:name="editingIdeaId"
+            app:argType="long"
+            android:defaultValue="0L"/>
     </fragment>
 </navigation>

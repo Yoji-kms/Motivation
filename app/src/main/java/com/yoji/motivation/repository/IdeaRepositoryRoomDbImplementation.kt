@@ -13,10 +13,10 @@ import javax.inject.Singleton
 @Singleton
 class IdeaRepositoryRoomDbImplementation @Inject constructor(private val dao: IdeaDAO) : IdeaRepository {
     private val config = PagingConfig(
-        pageSize = 7,
-        prefetchDistance = 3,
+        pageSize = 10,
+        prefetchDistance = 5,
         enablePlaceholders = true,
-        maxSize = 13
+        maxSize = 20
     )
 
     override fun getAll(): Flow<PagingData<Idea>> = Pager(config = config) { dao.getAll() }.flow.map {
@@ -28,19 +28,13 @@ class IdeaRepositoryRoomDbImplementation @Inject constructor(private val dao: Id
             it.map(IdeaEntity::toIdea)
         }
 
-    override fun likeById(id: Long) {
-        dao.likeById(id)
-    }
+    override fun getById(id: Long): Idea = dao.getById(id)
 
-    override fun dislikeById(id: Long) {
-        dao.dislikeById(id)
-    }
+    override fun likeById(id: Long) = dao.likeById(id)
 
-    override fun removeById(id: Long) {
-        dao.removeById(id)
-    }
+    override fun dislikeById(id: Long) = dao.dislikeById(id)
 
-    override fun save(idea: Idea) {
-        dao.save(IdeaEntity.fromIdea(idea))
-    }
+    override fun removeById(id: Long) = dao.removeById(id)
+
+    override fun save(idea: Idea) = dao.save(IdeaEntity.fromIdea(idea))
 }

@@ -16,15 +16,17 @@ import com.yoji.motivation.R
 import com.yoji.motivation.databinding.DialogAddLinkBinding
 import com.yoji.motivation.databinding.FragmentCreateOrEditBinding
 import com.yoji.motivation.observers.CreateOrEditLifecycleObserver
-import com.yoji.motivation.viewmodel.IdeaListViewModel
+import com.yoji.motivation.viewmodel.CreateOrEditViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CreateOrEditFragment : Fragment() {
 
     private var _binding: FragmentCreateOrEditBinding? = null
     private val binding get() = _binding!!
     private lateinit var observer: CreateOrEditLifecycleObserver
-    private val ideaViewModel: IdeaListViewModel by viewModels(ownerProducer = ::requireActivity)
-    private val editingIdea by lazy { ideaViewModel.editingIdea.value }
+    private val createOrEditViewModel: CreateOrEditViewModel by viewModels(ownerProducer = ::requireActivity)
+    private val editingIdea by lazy { createOrEditViewModel.editingIdea.value }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +42,9 @@ class CreateOrEditFragment : Fragment() {
     ): View {
         _binding = FragmentCreateOrEditBinding.inflate(inflater, container, false)
 
+        val ideaId = arguments?.getLong("editingIdeaId") ?: 0L
+        if (ideaId == 0L) createOrEditViewModel.clear()
+        else createOrEditViewModel.edit(ideaId)
         binding.apply {
             if (editingIdea?.id != 0L) {
                 createOrEditToolbarId.title = getString(R.string.edit_idea)
@@ -119,15 +124,15 @@ class CreateOrEditFragment : Fragment() {
                 addImageBtnId.visibility = View.VISIBLE
             }
             saveIdeaBtnId.setOnClickListener {
-                ideaViewModel.changeContent(
+                createOrEditViewModel.changeContent(
                     newContent = newContentEdtTxtViewId.text.toString(),
                     newImageImgView = addingImageImgViewId,
                     context = requireContext(),
                     newLink = linkTxtViewId.text.toString()
                 )
                 observer.unregister()
-                ideaViewModel.save()
-                ideaViewModel.clear()
+                createOrEditViewModel.save()
+                createOrEditViewModel.clear()
                 findNavController().navigate(R.id.action_createOrEditFragment_to_ideaListFragment)
             }
             newContentEdtTxtViewId.addTextChangedListener(object : TextWatcher {
