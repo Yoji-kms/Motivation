@@ -77,7 +77,6 @@ class IdeaListFragment : Fragment() {
         binding.ideaListViewId.adapter = ideaAdapter
 
         binding.createIdeaFabId.setOnClickListener {
-//            ideaListViewModel.clear()
             findNavController().navigate(R.id.action_ideaListFragment_to_createOrEditFragment)
         }
 

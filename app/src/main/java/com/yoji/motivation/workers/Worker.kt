@@ -261,7 +261,7 @@ class Worker(
             FileOutputStream(file).use {
                 BitmapFactory.decodeResource(App.appContext().resources, resId).compress(
                     Bitmap.CompressFormat.JPEG,
-                    100,
+                    20,
                     it
                 )
             }

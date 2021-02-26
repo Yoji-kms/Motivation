@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.view.View
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.yoji.motivation.R
 import com.yoji.motivation.application.App
 import com.yoji.motivation.databinding.ItemIdeaBinding
@@ -49,7 +50,7 @@ class IdeaViewHolder(
             imgImgViewId.apply {
                 with(idea.imageUri) {
                     visibility = if (this.toString() != "null") {
-                        setImageURI(this)
+                        Glide.with(root).load(this).into(imgImgViewId)
                         View.VISIBLE
                     } else View.GONE
                 }

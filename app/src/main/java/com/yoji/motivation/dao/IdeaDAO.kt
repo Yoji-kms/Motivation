@@ -7,7 +7,6 @@ import androidx.room.Query
 import androidx.paging.PagingSource
 import com.yoji.motivation.dto.Idea
 import com.yoji.motivation.entity.IdeaEntity
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface IdeaDAO {

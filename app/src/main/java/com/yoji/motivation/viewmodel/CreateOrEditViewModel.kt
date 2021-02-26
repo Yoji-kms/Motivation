@@ -97,7 +97,7 @@ class CreateOrEditViewModel @Inject constructor(
                     FileOutputStream(file).use {
                         viewToBitmap(imageView).compress(
                             Bitmap.CompressFormat.JPEG,
-                            50,
+                            20,
                             it
                         )
                     }
