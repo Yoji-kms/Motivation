@@ -9,14 +9,17 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.yoji.motivation.converters.Converters
+import com.yoji.motivation.dao.AuthorDao
 import com.yoji.motivation.dao.IdeaDAO
+import com.yoji.motivation.entity.AuthorEntity
 import com.yoji.motivation.entity.IdeaEntity
 import com.yoji.motivation.workers.Worker
 
-@Database(entities = [IdeaEntity::class], version = 1, exportSchema = false)
+@Database(entities = [IdeaEntity::class, AuthorEntity::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class IdeaRoomDB : RoomDatabase() {
     abstract fun ideaDAO(): IdeaDAO
+    abstract fun authorDAO(): AuthorDao
 
     companion object {
         @Volatile

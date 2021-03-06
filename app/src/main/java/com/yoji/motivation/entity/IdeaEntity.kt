@@ -3,14 +3,22 @@ package com.yoji.motivation.entity
 import android.net.Uri
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import com.yoji.motivation.dto.Idea
 import java.util.*
 
-@Entity(tableName = "ideas")
+@Entity(
+    tableName = "ideas",
+    foreignKeys = [ForeignKey(
+        entity = AuthorEntity::class,
+        parentColumns = ["id"],
+        childColumns = ["authorId"]
+    )]
+)
 data class IdeaEntity(
     @PrimaryKey(autoGenerate = true) val id: Long,
-    @ColumnInfo(name = "author") val author: String,
+    @ColumnInfo(name = "authorId") val authorId: Long,
     @ColumnInfo(name = "published") val published: Date,
     @ColumnInfo(name = "content") val content: String,
     @ColumnInfo(name = "imageUri") val imageUri: Uri,
@@ -20,12 +28,12 @@ data class IdeaEntity(
     companion object {
         fun fromIdea(idea: Idea) = with(idea) {
             IdeaEntity(
-                id, author, published, content, imageUri, link, likesCounter
+                id, authorId, published, content, imageUri, link, likesCounter
             )
         }
     }
 }
 
 fun IdeaEntity.toIdea(): Idea = Idea(
-    id, author, published, content, imageUri, link, likesCounter
+    id, authorId, published, content, imageUri, link, likesCounter
 )

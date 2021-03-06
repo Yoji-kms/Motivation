@@ -8,7 +8,7 @@ import com.bumptech.glide.Glide
 import com.yoji.motivation.R
 import com.yoji.motivation.application.App
 import com.yoji.motivation.databinding.ItemIdeaBinding
-import com.yoji.motivation.dto.Idea
+import com.yoji.motivation.dto.IdeaWithAuthor
 import com.yoji.motivation.listeners.OnIdeaClickListener
 import java.text.SimpleDateFormat
 import java.util.*
@@ -18,7 +18,8 @@ class IdeaViewHolder(
     private val onIdeaClickListener: OnIdeaClickListener
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(idea: Idea) {
+    fun bind(ideaWithAuthor: IdeaWithAuthor) {
+        val idea = ideaWithAuthor.idea
         binding.apply {
             root.setOnLongClickListener { view ->
                 PopupMenu(App.appContext(), view).apply {
@@ -43,8 +44,8 @@ class IdeaViewHolder(
             root.setOnClickListener {
                 onIdeaClickListener.onLink(idea)
             }
-            authorTxtViewId.text = idea.author
-            authorTxtViewId.setOnClickListener { onIdeaClickListener.onAuthor(idea) }
+            authorTxtViewId.text = ideaWithAuthor.authorName
+            authorTxtViewId.setOnClickListener { onIdeaClickListener.onAuthor(ideaWithAuthor) }
             dateTxtViewId.text = idea.published.toFormattedString()
             contentTxtViewId.text = idea.content
             imgImgViewId.apply {
@@ -57,7 +58,7 @@ class IdeaViewHolder(
             }
             likeBtnId.setOnClickListener { onIdeaClickListener.onLike(idea) }
             dislikeBtnId.setOnClickListener { onIdeaClickListener.onDislike(idea) }
-            shareBtnId.setOnClickListener { onIdeaClickListener.onShare(idea) }
+            shareBtnId.setOnClickListener { onIdeaClickListener.onShare(ideaWithAuthor) }
             likesCounterTxtViewId.text = idea.likesCounter.toFormattedString()
         }
     }

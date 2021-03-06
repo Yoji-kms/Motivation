@@ -8,12 +8,13 @@ import com.yoji.motivation.application.App
 import com.yoji.motivation.callback.IdeaDiffCallback
 import com.yoji.motivation.databinding.ItemIdeaBinding
 import com.yoji.motivation.dto.Idea
+import com.yoji.motivation.dto.IdeaWithAuthor
 import com.yoji.motivation.listeners.OnIdeaClickListener
 import com.yoji.motivation.viewholder.IdeaViewHolder
 
 class IdeaAdapter(
     private val onIdeaClickListener: OnIdeaClickListener
-) : PagingDataAdapter<Idea, IdeaViewHolder>(IdeaDiffCallback()) {
+) : PagingDataAdapter<IdeaWithAuthor, IdeaViewHolder>(IdeaDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IdeaViewHolder {
         val binding = ItemIdeaBinding.inflate(

@@ -24,7 +24,7 @@ import javax.inject.Inject
 private val emptyIdea = Idea(
     id = 0L,
     content = "",
-    author = "Me",
+    authorId = 1L,
     published = Calendar.getInstance().time,
     likesCounter = 0,
     imageUri = Uri.parse("null"),

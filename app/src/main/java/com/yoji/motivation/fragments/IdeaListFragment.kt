@@ -15,6 +15,7 @@ import com.yoji.motivation.application.App
 import com.yoji.motivation.viewmodel.IdeaListViewModel
 import com.yoji.motivation.databinding.FragmentIdeaListBinding
 import com.yoji.motivation.dto.Idea
+import com.yoji.motivation.dto.IdeaWithAuthor
 import com.yoji.motivation.listeners.OnIdeaClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -34,20 +35,21 @@ class IdeaListFragment : Fragment() {
 
             override fun onDislike(idea: Idea) = ideaListViewModel.dislikeById(idea.id)
 
-            override fun onShare(idea: Idea) = ideaListViewModel.share(idea, requireContext())
+            override fun onShare(ideaWithAuthor: IdeaWithAuthor) =
+                ideaListViewModel.share(ideaWithAuthor, requireContext())
 
             override fun onLink(idea: Idea) = ideaListViewModel.link(idea, requireContext())
 
-            override fun onAuthor(idea: Idea) {
+            override fun onAuthor(ideaWithAuthor: IdeaWithAuthor) {
                 with(ideaListViewModel) {
                     if (!isFiltered()) {
-                        setAuthor(idea.author)
+                        setAuthor(ideaWithAuthor.idea.authorId)
                         binding.ideaListToolbarId.apply {
                             visibility = View.VISIBLE
-                            title = getString(R.string.author_filter, idea.author)
+                            title = getString(R.string.author_filter, ideaWithAuthor.authorName)
                         }
                         with(prefs.edit()) {
-                            putString(authorKey, idea.author)
+                            putString(authorKey, ideaWithAuthor.authorName)
                             apply()
                         }
                     }
@@ -61,7 +63,10 @@ class IdeaListFragment : Fragment() {
 
             override fun onEdit(idea: Idea) {
                 val bundle = bundleOf("editingIdeaId" to idea.id)
-                findNavController().navigate(R.id.action_ideaListFragment_to_createOrEditFragment, bundle)
+                findNavController().navigate(
+                    R.id.action_ideaListFragment_to_createOrEditFragment,
+                    bundle
+                )
             }
         })
     }
@@ -80,7 +85,7 @@ class IdeaListFragment : Fragment() {
             findNavController().navigate(R.id.action_ideaListFragment_to_createOrEditFragment)
         }
 
-        ideaListViewModel.data.observe(viewLifecycleOwner){
+        ideaListViewModel.data.observe(viewLifecycleOwner) {
             ideaAdapter.submitData(lifecycle, it)
         }
 

@@ -7,14 +7,26 @@ import androidx.room.Query
 import androidx.paging.PagingSource
 import com.yoji.motivation.dto.Idea
 import com.yoji.motivation.entity.IdeaEntity
+import com.yoji.motivation.entity.IdeaWithAuthorEntity
 
 @Dao
 interface IdeaDAO {
-    @Query("SELECT * FROM ideas ORDER BY likesCounter DESC")
-    fun getAll(): PagingSource<Int, IdeaEntity>
+    @Query(
+        """SELECT ideas.*, authors.name AS authorName FROM ideas INNER JOIN authors
+        ON ideas.authorId = authors.id ORDER BY likesCounter DESC"""
+    )
+    fun getAllWithAuthors(): PagingSource<Int, IdeaWithAuthorEntity>
 
-    @Query("SELECT * FROM ideas WHERE author = :author ORDER BY likesCounter DESC")
-    fun getByAuthor(author: String): PagingSource<Int, IdeaEntity>
+//    @Query("SELECT * FROM ideas ORDER BY likesCounter DESC")
+//    fun getAll(): PagingSource<Int, IdeaEntity>
+//
+//    @Query("SELECT * FROM ideas WHERE authorId = :authorId ORDER BY likesCounter DESC")
+//    fun getByAuthorId(authorId: Long): PagingSource<Int, IdeaEntity>
+
+    @Query(
+        """SELECT ideas.*, authors.name AS authorName FROM ideas INNER JOIN authors
+         ON ideas.authorId = authors.id WHERE authorId = :authorId ORDER BY likesCounter DESC""")
+    fun getByAuthorId(authorId: Long): PagingSource<Int, IdeaWithAuthorEntity>
 
     @Query("SELECT * FROM ideas WHERE id = :id")
     fun getById(id: Long): Idea

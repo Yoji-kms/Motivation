@@ -5,7 +5,7 @@ import java.util.*
 
 data class Idea(
     val id: Long,
-    val author: String,
+    val authorId: Long,
     val published: Date,
     val content: String,
     val imageUri: Uri,
