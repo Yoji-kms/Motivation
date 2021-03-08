@@ -1,6 +1,5 @@
 package com.yoji.motivation.fragments
 
-import android.app.AlertDialog
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -14,7 +13,6 @@ import androidx.navigation.fragment.findNavController
 import com.yoji.motivation.R
 import com.yoji.motivation.adapter.IdeaAdapter
 import com.yoji.motivation.application.App
-import com.yoji.motivation.databinding.DialogEditNameBinding
 import com.yoji.motivation.viewmodel.IdeaListViewModel
 import com.yoji.motivation.databinding.FragmentIdeaListBinding
 import com.yoji.motivation.dto.Idea
@@ -153,59 +151,10 @@ class IdeaListFragment : Fragment() {
                 setOnMenuItemClickListener { menuItem ->
                     when (menuItem.itemId) {
                         R.id.edit_author -> {
-                            val dialogBinding = DialogEditNameBinding.inflate(layoutInflater)
-                            AlertDialog.Builder(requireActivity()).apply {
-                                setTitle(getString(R.string.change_user_name))
-                                setView(dialogBinding.root)
-                                setPositiveButton(getString(R.string.ok)) { _, _ ->
-                                    ideaListViewModel.changeAuthorName(
-                                        authorId,
-                                        dialogBinding.editNameEdtTxtViewId.editText?.text.toString()
-                                            .trim()
-                                    )
-                                }
-                                setNegativeButton(getString(R.string.cancel)) { _, _ -> }
-                                show()
-                            }
-//                            val dialog: AlertDialog = requireActivity().let {
-//                                val builder = AlertDialog.Builder(it)
-//                                builder.apply {
-//                                    setTitle(getString(R.string.change_user_name))
-//                                    setView(dialogBinding.root)
-//                                    setPositiveButton(getString(R.string.ok)) { _, _ ->
-//                                        ideaListViewModel.changeAuthorName(
-//                                            authorId,
-//                                            dialogBinding.editNameEdtTxtViewId.text.toString()
-//                                                .trim()
-//                                        )
-//                                        isEnabled = false
-//                                    }
-//                                    setNegativeButton(getString(R.string.cancel)) { _, _ -> }
-//                                }
-//                                builder.create()
-//                            }
-//                            dialogBinding.editNameEdtTxtViewId.addTextChangedListener(
-//                                object : TextWatcher {
-//                                    override fun beforeTextChanged(
-//                                        s: CharSequence?,
-//                                        start: Int,
-//                                        count: Int,
-//                                        after: Int
-//                                    ) = Unit
-//
-//                                    override fun onTextChanged(
-//                                        s: CharSequence?,
-//                                        start: Int,
-//                                        before: Int,
-//                                        count: Int
-//                                    ) {
-//                                        dialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled =
-//                                            !s.isNullOrBlank()
-//                                    }
-//
-//                                    override fun afterTextChanged(s: Editable?) = Unit
-//                                })
-//                            dialog.show()
+                            ChangeAuthorNameDialogFragment(
+                                ideaListViewModel,
+                                authorId
+                            ).show(childFragmentManager, "tag")
                             true
                         }
                         else -> false
