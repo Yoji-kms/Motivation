@@ -54,6 +54,10 @@ class CreateOrEditViewModel @Inject constructor(
         editingIdea.value = emptyIdea
     }
 
+    fun setAuthor(authorId: Long){
+        editingIdea.value = emptyIdea.copy(authorId = authorId)
+    }
+
     fun changeContent(
         newContent: String,
         newImageImgView: ShapeableImageView,

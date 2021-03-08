@@ -11,11 +11,15 @@ import androidx.paging.cachedIn
 import com.yoji.motivation.R
 import com.yoji.motivation.application.App
 import com.yoji.motivation.db.IdeaRoomDB
+import com.yoji.motivation.dto.Author
 import com.yoji.motivation.dto.Idea
 import com.yoji.motivation.dto.IdeaWithAuthor
+import com.yoji.motivation.repository.AuthorRepository
+import com.yoji.motivation.repository.AuthorRepositoryRoomDbImplementation
 import com.yoji.motivation.repository.IdeaRepository
 import com.yoji.motivation.repository.IdeaRepositoryRoomDbImplementation
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flatMapLatest
@@ -29,14 +33,31 @@ class IdeaListViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val ideaRepository: IdeaRepository = IdeaRepositoryRoomDbImplementation(
         IdeaRoomDB.getInstance(App.appContext()).ideaDAO()
+    ),
+    private val authorRepository: AuthorRepository = AuthorRepositoryRoomDbImplementation(
+        IdeaRoomDB.getInstance(App.appContext()).authorDAO()
     )
 ) : ViewModel() {
 
-    private val author: MutableStateFlow<Long> = MutableStateFlow(
+    private val emptyAuthor: Flow<Author> = MutableStateFlow(Author(0L, ""))
+
+    private val authorSetted: MutableStateFlow<Long> = MutableStateFlow(
+        savedStateHandle.get(AUTHOR_SAVED_STATE_KEY) ?: 0L
+    )
+
+    private val authorFilter: MutableStateFlow<Long> = MutableStateFlow(
         savedStateHandle.get(AUTHOR_SAVED_STATE_KEY) ?: NO_AUTHOR
     )
 
-    val data: LiveData<PagingData<IdeaWithAuthor>> = author.flatMapLatest { author_id ->
+    val currentAuthor = authorSetted.flatMapLatest { author_id ->
+        if (author_id == 0L) {
+            emptyAuthor
+        } else {
+            authorRepository.getById(author_id)
+        }
+    }.asLiveData()
+
+    val data: LiveData<PagingData<IdeaWithAuthor>> = authorFilter.flatMapLatest { author_id ->
         if (author_id == NO_AUTHOR) {
             ideaRepository.getAll()
         } else {
@@ -92,25 +113,35 @@ class IdeaListViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            author.collect { newAuthor ->
+            authorFilter.collect { newAuthor ->
                 savedStateHandle.set(AUTHOR_SAVED_STATE_KEY, newAuthor)
+            }
+            authorSetted.collect{ settedAuthor ->
+                savedStateHandle.set(AUTHOR_SETTED_KEY, settedAuthor)
             }
         }
     }
 
-    fun setAuthor(author_id: Long) {
-        author.value = author_id
+    fun changeAuthorName(id: Long, newName: String) = authorRepository.updateById(id, newName)
+
+    fun setAuthor(authorId: Long){
+        authorSetted.value = authorId
     }
 
-    fun clearAuthor() {
-        author.value = NO_AUTHOR
+    fun setAuthorFilter(author_id: Long) {
+        authorFilter.value = author_id
     }
 
-    fun isFiltered() = author.value != NO_AUTHOR
+    fun clearAuthorFilter() {
+        authorFilter.value = NO_AUTHOR
+    }
+
+    fun isFiltered() = authorFilter.value != NO_AUTHOR
 
     companion object {
         private const val NO_AUTHOR = 0L
         private const val AUTHOR_SAVED_STATE_KEY = "AUTHOR_SAVED_STATE_KEY"
+        private const val AUTHOR_SETTED_KEY = "AUTHOR_SETTED_KEY"
         const val IMAGE_DIR = "images"
     }
 }

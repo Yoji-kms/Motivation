@@ -43,8 +43,13 @@ class CreateOrEditFragment : Fragment() {
         _binding = FragmentCreateOrEditBinding.inflate(inflater, container, false)
 
         val ideaId = arguments?.getLong("editingIdeaId") ?: 0L
-        if (ideaId == 0L) createOrEditViewModel.clear()
+        if (ideaId == 0L) {
+            createOrEditViewModel.clear()
+            val authorId = arguments?.getLong("currentAuthorId") ?: 0L
+            if (authorId != 0L) createOrEditViewModel.setAuthor(authorId)
+        }
         else createOrEditViewModel.edit(ideaId)
+
         binding.apply {
             if (editingIdea?.id != 0L) {
                 createOrEditToolbarId.title = getString(R.string.edit_idea)

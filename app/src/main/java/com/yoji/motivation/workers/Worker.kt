@@ -49,7 +49,7 @@ class Worker(
         Idea(
             id = 0L,
             content = "Mat Zo - Illusions of Depth",
-            authorId = 1,
+            authorId = 2,
             published = Calendar.getInstance().apply { set(2020, 12, 6) }.time,
             likesCounter = 0,
             imageUri = resToUri(R.drawable.mat_zo_illuzions),
@@ -58,7 +58,7 @@ class Worker(
         Idea(
             id = 0L,
             content = "Sandman. Dream Catchers",
-            authorId = 1,
+            authorId = 2,
             published = Calendar.getInstance().apply { set(2020, 6, 6) }.time,
             likesCounter = 0,
             imageUri = resToUri(R.drawable.sandman),
@@ -67,7 +67,7 @@ class Worker(
         Idea(
             id = 0L,
             content = "Blade Runner 2049. Art of scale and depth",
-            authorId = 2,
+            authorId = 3,
             published = Calendar.getInstance().apply { set(2020, 1, 20) }.time,
             likesCounter = 0,
             imageUri = resToUri(R.drawable.blade_runner_2049),
@@ -76,7 +76,7 @@ class Worker(
         Idea(
             id = 0L,
             content = "4",
-            authorId = 2,
+            authorId = 3,
             published = Calendar.getInstance().apply { set(2020, 0, 20) }.time,
             likesCounter = 0,
             imageUri = Uri.parse("null"),
@@ -85,7 +85,7 @@ class Worker(
         Idea(
             id = 0L,
             content = "5",
-            authorId = 2,
+            authorId = 3,
             published = Calendar.getInstance().apply { set(2020, 2, 20) }.time,
             likesCounter = 0,
             imageUri = Uri.parse("null"),
@@ -94,7 +94,7 @@ class Worker(
         Idea(
             id = 0L,
             content = "6",
-            authorId = 2,
+            authorId = 3,
             published = Calendar.getInstance().apply { set(2020, 3, 20) }.time,
             likesCounter = 0,
             imageUri = Uri.parse("null"),
@@ -103,7 +103,7 @@ class Worker(
         Idea(
             id = 0L,
             content = "7",
-            authorId = 2,
+            authorId = 3,
             published = Calendar.getInstance().apply { set(2020, 4, 20) }.time,
             likesCounter = 0,
             imageUri = Uri.parse("null"),
@@ -112,7 +112,7 @@ class Worker(
         Idea(
             id = 0L,
             content = "8",
-            authorId = 2,
+            authorId = 3,
             published = Calendar.getInstance().apply { set(2020, 5, 20) }.time,
             likesCounter = 0,
             imageUri = Uri.parse("null"),
@@ -139,7 +139,7 @@ class Worker(
         Idea(
             id = 0L,
             content = "11",
-            authorId = 2,
+            authorId = 3,
             published = Calendar.getInstance().apply { set(2020, 8, 20) }.time,
             likesCounter = 0,
             imageUri = Uri.parse("null"),
@@ -166,7 +166,7 @@ class Worker(
         Idea(
             id = 0L,
             content = "14",
-            authorId = 2,
+            authorId = 3,
             published = Calendar.getInstance().apply { set(2020, 10, 20) }.time,
             likesCounter = 0,
             imageUri = Uri.parse("null"),
@@ -184,7 +184,7 @@ class Worker(
         Idea(
             id = 0L,
             content = "16",
-            authorId = 2,
+            authorId = 3,
             published = Calendar.getInstance().apply { set(2020, 10, 20) }.time,
             likesCounter = 0,
             imageUri = Uri.parse("null"),
@@ -211,7 +211,7 @@ class Worker(
         Idea(
             id = 0L,
             content = "19",
-            authorId = 2,
+            authorId = 3,
             published = Calendar.getInstance().apply { set(2020, 10, 20) }.time,
             likesCounter = 0,
             imageUri = Uri.parse("null"),
@@ -238,7 +238,7 @@ class Worker(
         Idea(
             id = 0L,
             content = "22",
-            authorId = 2,
+            authorId = 3,
             published = Calendar.getInstance().apply { set(2020, 10, 20) }.time,
             likesCounter = 0,
             imageUri = Uri.parse("null"),

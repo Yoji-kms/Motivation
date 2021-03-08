@@ -20,6 +20,11 @@
     <string name="enter_the_idea_content">Enter the idea content</string>
     <string name="share_idea">Share idea</string>
     <string name="link_is_empty">Link is empty</string>
+    <string name="user_name">User name: %1$s</string>
+    <string name="enter_your_name">Enter your name</string>
+    <string name="name">Name</string>
+    <string name="enter_new_name">Enter new name</string>
+    <string name="change_user_name">Change user name</string>
     <string-array name="spinner" translatable="false">
         <item>http://</item>
         <item>https://</item>

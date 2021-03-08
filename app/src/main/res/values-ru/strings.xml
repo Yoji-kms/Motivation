@@ -20,4 +20,9 @@
     <string name="enter_the_idea_content">Введите контент идеи</string>
     <string name="share_idea">Поделиться идеей</string>
     <string name="link_is_empty">Ссылка пустая</string>
+    <string name="user_name">Имя пользователя: %1$s</string>
+    <string name="enter_your_name">Введите имя</string>
+    <string name="name">Имя</string>
+    <string name="enter_new_name">Введите новое имя</string>
+    <string name="change_user_name">Изменить имя пользователя</string>
 </resources>

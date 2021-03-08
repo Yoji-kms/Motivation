@@ -26,5 +26,14 @@
             android:name="editingIdeaId"
             app:argType="long"
             android:defaultValue="0L"/>
+        <argument
+            android:name="currentAuthorId"
+            app:argType="long"
+            android:defaultValue="0L"/>
     </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.yoji.motivation.fragments.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login"/>
 </navigation>
