@@ -5,6 +5,18 @@
         android:id="@+id/edit_author"
         android:icon="@drawable/ic_edit_author"
         android:orderInCategory="100"
-        app:showAsAction="always"
+        app:showAsAction="ifRoom"
         android:title="@string/edit" />
+    <item
+        android:id="@+id/add_author"
+        android:icon="@drawable/ic_add_author"
+        android:orderInCategory="100"
+        app:showAsAction="never"
+        android:title="@string/add_new_author"/>
+    <item
+        android:id="@+id/change_author"
+        android:icon="@drawable/ic_change_author"
+        android:orderInCategory="100"
+        app:showAsAction="never"
+        android:title="@string/change_author" />
 </menu>

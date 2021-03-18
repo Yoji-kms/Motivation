@@ -6,7 +6,6 @@ import com.yoji.motivation.dto.Idea
 import com.yoji.motivation.dto.IdeaWithAuthor
 import com.yoji.motivation.entity.IdeaEntity
 import com.yoji.motivation.entity.IdeaWithAuthorEntity
-import com.yoji.motivation.entity.toIdea
 import com.yoji.motivation.entity.toIdeaWithAuthor
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

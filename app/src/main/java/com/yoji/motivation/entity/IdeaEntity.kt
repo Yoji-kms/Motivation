@@ -4,6 +4,7 @@ import android.net.Uri
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.ForeignKey.CASCADE
 import androidx.room.PrimaryKey
 import com.yoji.motivation.dto.Idea
 import java.util.*
@@ -13,7 +14,8 @@ import java.util.*
     foreignKeys = [ForeignKey(
         entity = AuthorEntity::class,
         parentColumns = ["id"],
-        childColumns = ["authorId"]
+        childColumns = ["authorId"],
+        onDelete = CASCADE
     )]
 )
 data class IdeaEntity(

@@ -3,7 +3,7 @@
     <string name="app_name">Мотивация</string>
     <string name="description_idea_image">Изображение для идеи</string>
     <string name="description_create_new_idea">Создайте новую идею</string>
-    <string name="edit">Изменить</string>
+    <string name="edit">Изменить имя</string>
     <string name="delete">Удалить</string>
     <string name="add_image">Добавить изображение</string>
     <string name="add_link">Добавить ссылку</string>
@@ -20,9 +20,12 @@
     <string name="enter_the_idea_content">Введите контент идеи</string>
     <string name="share_idea">Поделиться идеей</string>
     <string name="link_is_empty">Ссылка пустая</string>
-    <string name="user_name">Имя пользователя: %1$s</string>
+    <string name="user_name">Имя автора: %1$s</string>
     <string name="enter_your_name">Введите имя</string>
     <string name="name">Имя</string>
     <string name="enter_new_name">Введите новое имя</string>
-    <string name="change_user_name">Изменить имя пользователя</string>
+    <string name="change_user_name">Изменить имя атвора</string>
+    <string name="add_new_author">Добавить автора</string>
+    <string name="change_author">Поменять автора</string>
+    <string name="choose_author">Выберите автора:</string>
 </resources>

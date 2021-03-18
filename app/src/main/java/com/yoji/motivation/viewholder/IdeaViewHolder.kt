@@ -49,6 +49,7 @@ class IdeaViewHolder(
             dateTxtViewId.text = idea.published.toFormattedString()
             contentTxtViewId.text = idea.content
             imgImgViewId.apply {
+                layout(0, 0, 0, 0)
                 with(idea.imageUri) {
                     visibility = if (this.toString() != "null") {
                         Glide.with(root).load(this).into(imgImgViewId)

@@ -17,12 +17,6 @@ interface IdeaDAO {
     )
     fun getAllWithAuthors(): PagingSource<Int, IdeaWithAuthorEntity>
 
-//    @Query("SELECT * FROM ideas ORDER BY likesCounter DESC")
-//    fun getAll(): PagingSource<Int, IdeaEntity>
-//
-//    @Query("SELECT * FROM ideas WHERE authorId = :authorId ORDER BY likesCounter DESC")
-//    fun getByAuthorId(authorId: Long): PagingSource<Int, IdeaEntity>
-
     @Query(
         """SELECT ideas.*, authors.name AS authorName FROM ideas INNER JOIN authors
          ON ideas.authorId = authors.id WHERE authorId = :authorId ORDER BY likesCounter DESC""")

@@ -154,7 +154,17 @@ class IdeaListFragment : Fragment() {
                             ChangeAuthorNameDialogFragment(
                                 ideaListViewModel,
                                 authorId
-                            ).show(childFragmentManager, "tag")
+                            ).show(childFragmentManager, "change_author_name_tag")
+                            true
+                        }
+                        R.id.change_author -> {
+                            ChangeAuthorDialogFragment(
+                                ideaListViewModel
+                            ).show(childFragmentManager, "change_author_tag")
+                            true
+                        }
+                        R.id.add_author -> {
+                            navController.navigate(R.id.loginFragment)
                             true
                         }
                         else -> false

@@ -1,6 +1,8 @@
 package com.yoji.motivation.dao
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.yoji.motivation.dto.Author
@@ -11,6 +13,9 @@ import kotlinx.coroutines.flow.Flow
 interface AuthorDao {
     @Insert
     fun insert(author: AuthorEntity): Long
+
+    @Query("SELECT * FROM authors")
+    fun getAll(): PagingSource<Int, AuthorEntity>
 
     @Query("SELECT * FROM authors WHERE id = :id")
     fun getById(id: Long): Flow<Author>
@@ -29,4 +34,7 @@ interface AuthorDao {
             )
             0
         }
+
+    @Delete
+    fun remove(author: AuthorEntity)
 }
