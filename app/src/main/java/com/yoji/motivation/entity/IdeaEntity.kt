@@ -20,7 +20,7 @@ import java.util.*
 )
 data class IdeaEntity(
     @PrimaryKey(autoGenerate = true) val id: Long,
-    @ColumnInfo(name = "authorId") val authorId: Long,
+    @ColumnInfo(name = "authorId", index = true) val authorId: Long,
     @ColumnInfo(name = "published") val published: Date,
     @ColumnInfo(name = "content") val content: String,
     @ColumnInfo(name = "imageUri") val imageUri: Uri,
