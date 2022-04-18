@@ -6,13 +6,16 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.yoji.motivation.databinding.FragmentLoginBinding
-import com.yoji.motivation.fragments.IdeaListFragment.Companion.prefs
+import com.yoji.motivation.utils.DataStoreUtils
 import com.yoji.motivation.viewmodel.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
@@ -23,7 +26,7 @@ class LoginFragment : Fragment() {
     private val binding get() = _binding!!
 
     companion object{
-        const val AUTHOR_ID: String = "AUTHOR_ID"
+        val AUTHOR_ID = longPreferencesKey("author_id")
     }
 
     override fun onCreateView(
@@ -57,10 +60,11 @@ class LoginFragment : Fragment() {
                 val authorId = loginViewModel.saveAuthor(
                     authorTextInputLayoutId.editText?.text.toString()
                 )
-                with(prefs.edit()){
-                    putLong(AUTHOR_ID, authorId)
-                    apply()
+
+                lifecycleScope.launch {
+                    DataStoreUtils.setValue(AUTHOR_ID, authorId)
                 }
+
                 findNavController().popBackStack()
             }
         }

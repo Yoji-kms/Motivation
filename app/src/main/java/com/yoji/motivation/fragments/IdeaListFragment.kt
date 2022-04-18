@@ -1,25 +1,30 @@
 package com.yoji.motivation.fragments
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.*
 import androidx.activity.OnBackPressedCallback
 import androidx.core.net.toFile
 import androidx.core.os.bundleOf
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.yoji.motivation.R
 import com.yoji.motivation.adapter.IdeaAdapter
-import com.yoji.motivation.application.App
 import com.yoji.motivation.viewmodel.IdeaListViewModel
 import com.yoji.motivation.databinding.FragmentIdeaListBinding
 import com.yoji.motivation.dto.Idea
 import com.yoji.motivation.dto.IdeaWithAuthor
 import com.yoji.motivation.fragments.LoginFragment.Companion.AUTHOR_ID
 import com.yoji.motivation.listeners.OnIdeaClickListener
+import com.yoji.motivation.utils.DataStoreUtils
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class IdeaListFragment : Fragment() {
@@ -28,11 +33,10 @@ class IdeaListFragment : Fragment() {
     private val binding get() = _binding!!
     private val ideaListViewModel by viewModels<IdeaListViewModel>(ownerProducer = ::requireActivity)
 
-    private val authorKey = "saved_filter"
+    private val authorKey = stringPreferencesKey("saved_filter")
 
     companion object {
-        val prefs: SharedPreferences =
-            App.appContext().getSharedPreferences("prefs", Context.MODE_PRIVATE)
+        val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
     }
 
     private val ideaAdapter by lazy {
@@ -55,9 +59,9 @@ class IdeaListFragment : Fragment() {
                             visibility = View.VISIBLE
                             title = getString(R.string.author_filter, ideaWithAuthor.authorName)
                         }
-                        with(prefs.edit()) {
-                            putString(authorKey, ideaWithAuthor.authorName)
-                            apply()
+
+                        lifecycleScope.launch {
+                            DataStoreUtils.setValue(authorKey, ideaWithAuthor.authorName)
                         }
                     }
                 }
@@ -110,7 +114,7 @@ class IdeaListFragment : Fragment() {
                 }
             }
             if (ideaListViewModel.isFiltered()) {
-                title = getString(R.string.author_filter, prefs.getString(authorKey, ""))
+                title = DataStoreUtils.getString(authorKey)
                 visibility = View.VISIBLE
             }
         }
@@ -137,16 +141,17 @@ class IdeaListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val authorId = prefs.getLong(AUTHOR_ID, 0)
+
+        val authorId = DataStoreUtils.getLong(AUTHOR_ID)
         val navController = findNavController()
 
         if (authorId == 0L) navController.navigate(R.id.loginFragment)
         else {
             ideaListViewModel.setAuthor(authorId)
             binding.authorNameToolbarId.apply {
-                ideaListViewModel.currentAuthor.observe(viewLifecycleOwner, {
+                ideaListViewModel.currentAuthor.observe(viewLifecycleOwner) {
                     title = getString(R.string.user_name, it.name)
-                })
+                }
                 also { it.menu.clear() }.inflateMenu(R.menu.author_toolbar_menu)
                 setOnMenuItemClickListener { menuItem ->
                     when (menuItem.itemId) {

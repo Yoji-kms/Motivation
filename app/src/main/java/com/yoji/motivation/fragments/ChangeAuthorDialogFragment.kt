@@ -5,14 +5,18 @@ import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.yoji.motivation.R
 import com.yoji.motivation.adapter.AuthorAdapter
 import com.yoji.motivation.databinding.DialogChangeAuthorBinding
 import com.yoji.motivation.dto.Author
+import com.yoji.motivation.fragments.LoginFragment.Companion.AUTHOR_ID
 import com.yoji.motivation.listeners.OnAuthorClickListener
+import com.yoji.motivation.utils.DataStoreUtils
 import com.yoji.motivation.viewmodel.AuthorListViewModel
 import com.yoji.motivation.viewmodel.IdeaListViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ChangeAuthorDialogFragment(
@@ -30,10 +34,11 @@ class ChangeAuthorDialogFragment(
                 object : OnAuthorClickListener {
                     override fun onAuthor(author: Author) {
                         ideaListViewModel.setAuthor(author.id)
-                        with(IdeaListFragment.prefs.edit()){
-                            putLong(LoginFragment.AUTHOR_ID, author.id)
-                            apply()
+
+                        lifecycleScope.launch {
+                            DataStoreUtils.setValue(AUTHOR_ID, author.id)
                         }
+
                         dialog.dismiss()
                     }
 

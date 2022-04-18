@@ -21,11 +21,9 @@ import com.yoji.motivation.repository.IdeaRepositoryRoomDbImplementation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
 import java.io.File
-import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -42,11 +40,11 @@ class IdeaListViewModel @Inject constructor(
     private val emptyAuthor: Flow<Author> = MutableStateFlow(Author(0L, ""))
 
     private val authorSetted: MutableStateFlow<Long> = MutableStateFlow(
-        savedStateHandle.get(AUTHOR_SAVED_STATE_KEY) ?: 0L
+        savedStateHandle[AUTHOR_SAVED_STATE_KEY] ?: 0L
     )
 
     private val authorFilter: MutableStateFlow<Long> = MutableStateFlow(
-        savedStateHandle.get(AUTHOR_SAVED_STATE_KEY) ?: NO_AUTHOR
+        savedStateHandle[AUTHOR_SAVED_STATE_KEY] ?: NO_AUTHOR
     )
 
     val currentAuthor = authorSetted.flatMapLatest { author_id ->
@@ -114,10 +112,12 @@ class IdeaListViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             authorFilter.collect { newAuthor ->
-                savedStateHandle.set(AUTHOR_SAVED_STATE_KEY, newAuthor)
+                savedStateHandle[AUTHOR_SAVED_STATE_KEY] = newAuthor
             }
+        }
+        viewModelScope.launch {
             authorSetted.collect{ settedAuthor ->
-                savedStateHandle.set(AUTHOR_SETTED_KEY, settedAuthor)
+                savedStateHandle[AUTHOR_SETTED_KEY] = settedAuthor
             }
         }
     }
