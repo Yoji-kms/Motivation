@@ -32,7 +32,7 @@ class IdeaRepositoryRoomDbImplementation @Inject constructor(private val dao: Id
             it.map(IdeaWithAuthorEntity::toIdeaWithAuthor)
         }
 
-    override fun getById(id: Long): Idea = dao.getById(id)
+    override suspend fun getById(id: Long): Idea = dao.getById(id)
 
     override suspend fun likeById(id: Long) = dao.likeById(id)
 

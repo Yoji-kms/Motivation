@@ -10,7 +10,7 @@ import javax.inject.Singleton
 interface IdeaRepository {
     fun getAll(): Flow<PagingData<IdeaWithAuthor>>
     fun getByAuthorId(authorId: Long): Flow<PagingData<IdeaWithAuthor>>
-    fun getById(id: Long): Idea
+    suspend fun getById(id: Long): Idea
     suspend fun likeById(id: Long)
     suspend fun dislikeById(id: Long)
     suspend fun removeById(id: Long)

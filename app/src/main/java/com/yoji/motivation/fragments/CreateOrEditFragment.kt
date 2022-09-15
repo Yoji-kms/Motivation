@@ -50,7 +50,11 @@ class CreateOrEditFragment : Fragment() {
             val authorId = arguments?.getLong("currentAuthorId") ?: 0L
             if (authorId != 0L) createOrEditViewModel.setAuthor(authorId)
         }
-        else createOrEditViewModel.edit(ideaId)
+        else {
+            lifecycleScope.launch {
+                createOrEditViewModel.edit(ideaId)
+            }
+        }
 
         binding.apply {
             if (editingIdea?.id != 0L) {

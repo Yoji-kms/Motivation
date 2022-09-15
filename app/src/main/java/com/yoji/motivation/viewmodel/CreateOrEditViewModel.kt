@@ -45,7 +45,7 @@ class CreateOrEditViewModel @Inject constructor(
         editingIdea.value = emptyIdea
     }
 
-    fun edit(ideaId: Long) {
+    suspend fun edit(ideaId: Long) {
         editingIdea.value = ideaRepository.getById(ideaId)
     }
 

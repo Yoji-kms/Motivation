@@ -24,7 +24,7 @@ interface AuthorDao {
     suspend fun updateById(id: Long, newName: String)
 
     @Query("DELETE FROM authors WHERE id = :id")
-    fun removeById(id: Long)
+    suspend fun removeById(id: Long)
 
     suspend fun save(author: AuthorEntity): Long =
         if (author.id == 0L) insert(author) else {

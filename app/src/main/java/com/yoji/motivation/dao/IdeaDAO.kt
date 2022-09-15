@@ -24,7 +24,7 @@ interface IdeaDAO {
     fun getByAuthorId(authorId: Long): PagingSource<Int, IdeaWithAuthorEntity>
 
     @Query("SELECT * FROM ideas WHERE id = :id")
-    fun getById(id: Long): Idea
+    suspend fun getById(id: Long): Idea
 
     @Query("UPDATE ideas SET likesCounter = likesCounter + 1 WHERE id = :id")
     suspend fun likeById(id: Long)
