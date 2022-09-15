@@ -20,10 +20,9 @@ class LoginViewModel @Inject constructor (
 ) : ViewModel() {
 
     private val emptyAuthor = Author(0L, "")
-
     private val newAuthor = MutableLiveData(emptyAuthor)
 
-    fun saveAuthor(authorName: String): Long {
+    suspend fun saveAuthor(authorName: String): Long {
         newAuthor.value = newAuthor.value?.copy(name = authorName.trim())
         newAuthor.value?.let {
             return authorRepository.save(it)

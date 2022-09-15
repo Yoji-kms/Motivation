@@ -49,7 +49,7 @@ class CreateOrEditViewModel @Inject constructor(
         editingIdea.value = ideaRepository.getById(ideaId)
     }
 
-    fun save() {
+    suspend fun save() {
         editingIdea.value?.let { ideaRepository.save(it) }
         editingIdea.value = emptyIdea
     }

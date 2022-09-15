@@ -11,8 +11,8 @@ interface IdeaRepository {
     fun getAll(): Flow<PagingData<IdeaWithAuthor>>
     fun getByAuthorId(authorId: Long): Flow<PagingData<IdeaWithAuthor>>
     fun getById(id: Long): Idea
-    fun likeById(id: Long)
-    fun dislikeById(id: Long)
-    fun removeById(id: Long)
-    fun save(idea: Idea)
+    suspend fun likeById(id: Long)
+    suspend fun dislikeById(id: Long)
+    suspend fun removeById(id: Long)
+    suspend fun save(idea: Idea)
 }

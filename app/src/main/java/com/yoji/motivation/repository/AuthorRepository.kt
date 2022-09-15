@@ -8,8 +8,8 @@ import javax.inject.Singleton
 @Singleton
 interface AuthorRepository {
     fun getAll(): Flow<PagingData<Author>>
-    fun updateById(id: Long, newName: String)
+    suspend fun updateById(id: Long, newName: String)
     fun getById(id: Long): Flow<Author>
-    fun save(author: Author): Long
-    fun remove(author: Author)
+    suspend fun save(author: Author): Long
+    suspend fun remove(author: Author)
 }

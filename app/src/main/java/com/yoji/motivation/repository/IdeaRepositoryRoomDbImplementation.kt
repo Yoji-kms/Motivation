@@ -34,11 +34,11 @@ class IdeaRepositoryRoomDbImplementation @Inject constructor(private val dao: Id
 
     override fun getById(id: Long): Idea = dao.getById(id)
 
-    override fun likeById(id: Long) = dao.likeById(id)
+    override suspend fun likeById(id: Long) = dao.likeById(id)
 
-    override fun dislikeById(id: Long) = dao.dislikeById(id)
+    override suspend fun dislikeById(id: Long) = dao.dislikeById(id)
 
-    override fun removeById(id: Long) = dao.removeById(id)
+    override suspend fun removeById(id: Long) = dao.removeById(id)
 
-    override fun save(idea: Idea) = dao.save(IdeaEntity.fromIdea(idea))
+    override suspend fun save(idea: Idea) = dao.save(IdeaEntity.fromIdea(idea))
 }

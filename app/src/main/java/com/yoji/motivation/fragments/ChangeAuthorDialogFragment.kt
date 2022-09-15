@@ -42,7 +42,7 @@ class ChangeAuthorDialogFragment(
                         dialog.dismiss()
                     }
 
-                    override fun onRemove(author: Author) {
+                    override suspend fun onRemove(author: Author) {
                         authorListViewModel.remove(author)
                     }
                 },

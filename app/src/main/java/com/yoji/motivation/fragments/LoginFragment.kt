@@ -1,12 +1,16 @@
 package com.yoji.motivation.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.longPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -25,7 +29,8 @@ class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
 
-    companion object{
+    companion object {
+        val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
         val AUTHOR_ID = longPreferencesKey("author_id")
     }
 
@@ -56,16 +61,16 @@ class LoginFragment : Fragment() {
                 override fun afterTextChanged(s: Editable?) = Unit
             })
 
+            saveAuthorBtnId.isEnabled = false
+
             saveAuthorBtnId.setOnClickListener {
-                val authorId = loginViewModel.saveAuthor(
-                    authorTextInputLayoutId.editText?.text.toString()
-                )
-
                 lifecycleScope.launch {
-                    DataStoreUtils.setValue(AUTHOR_ID, authorId)
-                }
+                    val authorId = loginViewModel.saveAuthor(
+                        authorTextInputLayoutId.editText?.text.toString()
+                    )
 
-                findNavController().popBackStack()
+                    DataStoreUtils.setValue(AUTHOR_ID, authorId)
+                }.invokeOnCompletion { findNavController().navigateUp() }
             }
         }
     }

@@ -1,15 +1,11 @@
 package com.yoji.motivation.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.view.*
 import androidx.activity.OnBackPressedCallback
 import androidx.core.net.toFile
 import androidx.core.os.bundleOf
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -35,16 +31,15 @@ class IdeaListFragment : Fragment() {
 
     private val authorKey = stringPreferencesKey("saved_filter")
 
-    companion object {
-        val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
-    }
-
     private val ideaAdapter by lazy {
         IdeaAdapter(object : OnIdeaClickListener {
 
-            override fun onLike(idea: Idea) = ideaListViewModel.likeById(idea.id)
+            override suspend fun onLike(idea: Idea) {
+                ideaListViewModel.likeById(idea.id)
 
-            override fun onDislike(idea: Idea) = ideaListViewModel.dislikeById(idea.id)
+            }
+
+            override suspend fun onDislike(idea: Idea) = ideaListViewModel.dislikeById(idea.id)
 
             override fun onShare(ideaWithAuthor: IdeaWithAuthor) =
                 ideaListViewModel.share(ideaWithAuthor, requireContext())
@@ -67,7 +62,7 @@ class IdeaListFragment : Fragment() {
                 }
             }
 
-            override fun onDelete(idea: Idea) {
+            override suspend fun onDelete(idea: Idea) {
                 with(idea.imageUri) { if (toString() != "null") toFile().delete() }
                 ideaListViewModel.removeById(idea.id)
             }

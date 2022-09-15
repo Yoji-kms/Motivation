@@ -1,9 +1,12 @@
 package com.yoji.motivation.viewholder
 
+import androidx.lifecycle.findViewTreeLifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.yoji.motivation.databinding.ItemAuthorBinding
 import com.yoji.motivation.dto.Author
 import com.yoji.motivation.listeners.OnAuthorClickListener
+import kotlinx.coroutines.launch
 
 class AuthorViewHolder(
     private val binding: ItemAuthorBinding,
@@ -22,7 +25,9 @@ class AuthorViewHolder(
             removeAuthorBtnId.apply {
                 isEnabled = author.id != currentAuthorId
                 setOnClickListener {
-                    onAuthorClickListener.onRemove(author)
+                    findViewTreeLifecycleOwner()?.lifecycleScope?.launch {
+                        onAuthorClickListener.onRemove(author)
+                    }
                 }
             }
         }

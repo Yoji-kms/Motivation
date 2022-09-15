@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.yoji.motivation.R
@@ -18,6 +19,7 @@ import com.yoji.motivation.databinding.FragmentCreateOrEditBinding
 import com.yoji.motivation.observers.CreateOrEditLifecycleObserver
 import com.yoji.motivation.viewmodel.CreateOrEditViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CreateOrEditFragment : Fragment() {
@@ -136,7 +138,9 @@ class CreateOrEditFragment : Fragment() {
                     newLink = linkTxtViewId.text.toString()
                 )
                 observer.unregister()
-                createOrEditViewModel.save()
+                lifecycleScope.launch {
+                    createOrEditViewModel.save()
+                }
                 createOrEditViewModel.clear()
                 findNavController().navigate(R.id.action_createOrEditFragment_to_ideaListFragment)
             }

@@ -3,7 +3,7 @@ package com.yoji.motivation.utils
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import com.yoji.motivation.application.App
-import com.yoji.motivation.fragments.IdeaListFragment.Companion.dataStore
+import com.yoji.motivation.fragments.LoginFragment.Companion.dataStore
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
@@ -19,7 +19,7 @@ object DataStoreUtils {
         App.appContext().dataStore.data.map { preferences ->
             preferences[key]
         }.first()
-    } ?: 0
+    } ?: 0L
 
     suspend fun <T> setValue(key: Preferences.Key<T>, value: T) {
         App.appContext().dataStore.edit { settings ->

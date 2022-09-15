@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface AuthorDao {
     @Insert
-    fun insert(author: AuthorEntity): Long
+    suspend fun insert(author: AuthorEntity): Long
 
     @Query("SELECT * FROM authors")
     fun getAll(): PagingSource<Int, AuthorEntity>
@@ -21,12 +21,12 @@ interface AuthorDao {
     fun getById(id: Long): Flow<Author>
 
     @Query("UPDATE authors SET name = :newName WHERE id = :id")
-    fun updateById(id: Long, newName: String)
+    suspend fun updateById(id: Long, newName: String)
 
     @Query("DELETE FROM authors WHERE id = :id")
     fun removeById(id: Long)
 
-    fun save(author: AuthorEntity): Long =
+    suspend fun save(author: AuthorEntity): Long =
         if (author.id == 0L) insert(author) else {
             updateById(
                 author.id,
@@ -36,5 +36,5 @@ interface AuthorDao {
         }
 
     @Delete
-    fun remove(author: AuthorEntity)
+    suspend fun remove(author: AuthorEntity)
 }

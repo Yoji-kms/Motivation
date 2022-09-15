@@ -3,6 +3,8 @@ package com.yoji.motivation.viewholder
 import android.annotation.SuppressLint
 import android.view.View
 import android.widget.PopupMenu
+import androidx.lifecycle.findViewTreeLifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.yoji.motivation.R
@@ -10,6 +12,7 @@ import com.yoji.motivation.application.App
 import com.yoji.motivation.databinding.ItemIdeaBinding
 import com.yoji.motivation.dto.IdeaWithAuthor
 import com.yoji.motivation.listeners.OnIdeaClickListener
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -26,7 +29,9 @@ class IdeaViewHolder(
                     setOnMenuItemClickListener {
                         when (it.itemId) {
                             R.id.delete_idea -> {
-                                onIdeaClickListener.onDelete(idea)
+                                super.itemView.findViewTreeLifecycleOwner()?.lifecycleScope?.launch {
+                                    onIdeaClickListener.onDelete(idea)
+                                }
                                 true
                             }
                             R.id.edit_idea -> {
@@ -57,8 +62,17 @@ class IdeaViewHolder(
                     } else View.GONE
                 }
             }
-            likeBtnId.setOnClickListener { onIdeaClickListener.onLike(idea) }
-            dislikeBtnId.setOnClickListener { onIdeaClickListener.onDislike(idea) }
+            likeBtnId.setOnClickListener {
+                super.itemView.findViewTreeLifecycleOwner()?.lifecycleScope?.launch {
+                    onIdeaClickListener.onLike(idea)
+                }
+
+            }
+            dislikeBtnId.setOnClickListener {
+                super.itemView.findViewTreeLifecycleOwner()?.lifecycleScope?.launch {
+                    onIdeaClickListener.onDislike(idea)
+                }
+            }
             shareBtnId.setOnClickListener { onIdeaClickListener.onShare(ideaWithAuthor) }
             likesCounterTxtViewId.text = idea.likesCounter.toFormattedString()
         }

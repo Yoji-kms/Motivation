@@ -25,8 +25,8 @@ class AuthorRepositoryRoomDbImplementation @Inject constructor(private val dao: 
         it.map(AuthorEntity::toAuthor)
     }
 
-    override fun updateById(id: Long, newName: String) = dao.updateById(id, newName)
+    override suspend fun updateById(id: Long, newName: String) = dao.updateById(id, newName)
     override fun getById(id: Long): Flow<Author> = dao.getById(id)
-    override fun save(author: Author): Long = dao.save(AuthorEntity.fromAuthor(author))
-    override fun remove(author: Author) = dao.remove(AuthorEntity.fromAuthor(author))
+    override suspend fun save(author: Author): Long = dao.save(AuthorEntity.fromAuthor(author))
+    override suspend fun remove(author: Author) = dao.remove(AuthorEntity.fromAuthor(author))
 }

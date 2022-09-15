@@ -22,5 +22,5 @@ class AuthorListViewModel @Inject constructor(
     val data: LiveData<PagingData<Author>> =
         authorRepository.getAll().asLiveData().cachedIn(viewModelScope)
 
-    fun remove(author: Author) = authorRepository.remove(author)
+    suspend fun remove(author: Author) = authorRepository.remove(author)
 }

@@ -63,14 +63,14 @@ class IdeaListViewModel @Inject constructor(
         }
     }.asLiveData().cachedIn(viewModelScope)
 
-    fun likeById(id: Long) = ideaRepository.likeById(id)
-    fun dislikeById(id: Long) = ideaRepository.dislikeById(id)
-    fun removeById(id: Long) = ideaRepository.removeById(id)
+    suspend fun likeById(id: Long) = ideaRepository.likeById(id)
+    suspend fun dislikeById(id: Long) = ideaRepository.dislikeById(id)
+    suspend fun removeById(id: Long) = ideaRepository.removeById(id)
     fun share(ideaWithAuthor: IdeaWithAuthor, context: Context) {
         val idea = ideaWithAuthor.idea
         val intent = Intent().apply {
             val shareImageUri = with(idea.imageUri.path) {
-                if (this == null) return@with null
+                if (this == null || this == "null") return@with null
                 else {
                     getUriForFile(
                         context,
@@ -122,7 +122,8 @@ class IdeaListViewModel @Inject constructor(
         }
     }
 
-    fun changeAuthorName(id: Long, newName: String) = authorRepository.updateById(id, newName)
+    suspend fun changeAuthorName(id: Long, newName: String) =
+        authorRepository.updateById(id, newName)
 
     fun setAuthor(authorId: Long){
         authorSetted.value = authorId

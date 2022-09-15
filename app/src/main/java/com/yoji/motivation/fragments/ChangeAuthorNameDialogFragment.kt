@@ -6,9 +6,11 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.lifecycleScope
 import com.yoji.motivation.R
 import com.yoji.motivation.databinding.DialogEditNameBinding
 import com.yoji.motivation.viewmodel.IdeaListViewModel
+import kotlinx.coroutines.launch
 
 class ChangeAuthorNameDialogFragment(
     private val ideaListViewModel: IdeaListViewModel,
@@ -26,11 +28,13 @@ class ChangeAuthorNameDialogFragment(
                 setTitle(getString(R.string.change_user_name))
                 setView(binding.root)
                 setPositiveButton(getString(R.string.ok)) { _, _ ->
-                    ideaListViewModel.changeAuthorName(
-                        authorId,
-                        binding.editNameEdtTxtViewId.editText?.text.toString()
-                            .trim()
-                    )
+                    lifecycleScope.launch {
+                        ideaListViewModel.changeAuthorName(
+                            authorId,
+                            binding.editNameEdtTxtViewId.editText?.text.toString()
+                                .trim()
+                        )
+                    }
                 }
                 setNegativeButton(getString(R.string.cancel)) { _, _ -> }
             }
